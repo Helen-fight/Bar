@@ -20,6 +20,16 @@ export default new Router({
       path: "/ticket",
       name: "Ticket",
       component: () => import("@/views/ticket")
+    },
+    {
+      path: "/scan",
+      name: "Scan",
+      component: () => import("@/views/scan")
+    },
+    {
+      path: "/reserve",
+      name: "Reserve",
+      component: () => import("@/views/reserve")
     }
   ]
 });

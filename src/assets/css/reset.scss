@@ -20,7 +20,7 @@ a,ins,s,u,del{text-decoration:none}
 sup,sub{vertical-align:baseline}
 html {height: 100%;}
 pre{font-family: "Microsoft Yahei", "Helvetica Neue", Helvetica, sans-serif, Arial;}
-body {font-family: "Microsoft Yahei", "Helvetica Neue", Helvetica, sans-serif, Arial;color: #333;font-size: .28em;line-height: 1;background-color:#F2F2F2;overflow-x: hidden;}
+body {font-family: "Microsoft Yahei", "Helvetica Neue", Helvetica, sans-serif, Arial;color: #222;font-size: .28em;line-height: .3rem;background-color:#F2F2F2;overflow-x: hidden;}
 *{
   -webkit-touch-callout:none;  /*系统默认菜单被禁用*/
   -webkit-user-select:none; /*webkit浏览器*/
@@ -107,4 +107,33 @@ a {color: #25a4bb;text-decoration: none;}
   /* 12版 */
   -webkit-align-items: center;
   align-items: center;
+}
+
+/* 滚动条
+-------------------------- */
+/* 滚动条凹槽的颜色，还可以设置边框属性 */
+//::-webkit-scrollbar-track {
+  //background-color: #fff;
+
+  /* 滚动条凹槽悬浮 */
+  //&:hover {
+    //background-color: #fff;
+  //}
+//}
+
+/* 滚动条的宽度、高度，对应竖滚动条、横滚动条 */
+::-webkit-scrollbar {
+  width: 2px;
+  height: 4px;
+}
+
+/* 滚动条的滑块 */
+::-webkit-scrollbar-thumb {
+  background-color: #e8e8e8;
+  border-radius: 2px;
+
+  /* 滚动条悬浮 */
+  &:hover {
+    background-color: #d9d9d9;
+  }
 }

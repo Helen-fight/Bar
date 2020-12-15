@@ -6,7 +6,7 @@ import router from "./router";
 
 Vue.config.productionTip = false;
 
-import "./assets/css/reset.css";
+import "./assets/css/reset.scss";
 import "./assets/js/rem.js";
 
 import MintUI from "mint-ui";

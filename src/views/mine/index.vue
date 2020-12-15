@@ -1,6 +1,64 @@
 <template>
   <div>
-    <div class="home">mine page!!</div>
+    <div class="mine-head">
+      <div class="photo-box flex-h flex-vc">
+        <img class="photo" src="" alt="" />
+        <p>樱桃小丸子</p>
+      </div>
+      <div class="head-menu flex-h flex-hsb">
+        <div class="head-menu-item">
+          <i class="order-icon"></i>
+          <p>我的订单</p>
+        </div>
+        <div class="head-menu-item">
+          <i class="order-icon code-icon"></i>
+          <p>我的验证码</p>
+        </div>
+        <div class="head-menu-item">
+          <i class="order-icon member-icon"></i>
+          <p>我的会员卡</p>
+        </div>
+      </div>
+    </div>
+    <div class="menu-box">
+      <div class="menu-item flex-h flex-hsb flex-vc">
+        <div class="flex-h flex-vc">
+          <i class="menu-icon"></i>
+          <span>我的优惠卡包</span>
+        </div>
+        <i class="right-icon"></i>
+      </div>
+      <div class="menu-item flex-h flex-hsb flex-vc">
+        <div class="flex-h flex-vc">
+          <i class="menu-icon tequan-icon"></i>
+          <span>我的专属特权</span>
+        </div>
+        <i class="right-icon"></i>
+      </div>
+      <div class="menu-item flex-h flex-hsb flex-vc">
+        <div class="flex-h flex-vc">
+          <i class="menu-icon history-icon"></i>
+          <span>消费历史订单</span>
+        </div>
+        <i class="right-icon"></i>
+      </div>
+      <div class="menu-item flex-h flex-hsb flex-vc">
+        <div class="flex-h flex-vc">
+          <i class="menu-icon save-icon"></i>
+          <span>我的存酒记录</span>
+        </div>
+        <i class="right-icon"></i>
+      </div>
+    </div>
+    <div class="menu-box">
+      <div class="menu-item flex-h flex-hsb flex-vc">
+        <div class="flex-h flex-vc">
+          <i class="menu-icon friend-icon"></i>
+          <span>我的好友</span>
+        </div>
+        <i class="right-icon"></i>
+      </div>
+    </div>
     <tabbar />
   </div>
 </template>
@@ -20,9 +78,76 @@ export default {
 };
 </script>
 
-<style>
-.home {
-  font-size: 0.3rem;
-  color: royalblue;
+<style lang="scss" scoped>
+@mixin bgImg($url) {
+  background-image: url($url);
+  background-repeat: no-repeat;
+  background-size: 100%;
+}
+.mine-head {
+  background-color: #fff;
+  margin-bottom: 0.18rem;
+  .photo-box {
+    padding: 0.3rem 0.42rem 0.5rem;
+    font-size: 0.38rem;
+    font-weight: 600;
+    .photo {
+      width: 1.3rem;
+      height: 1.3rem;
+      background-color: pink;
+      border-radius: 50%;
+      margin-right: 0.24rem;
+    }
+  }
+  .head-menu {
+    padding: 0.2rem 0.7rem;
+    .head-menu-item {
+      font-size: 0.24rem;
+      text-align: center;
+    }
+    .order-icon {
+      display: inline-block;
+      width: 0.56rem;
+      height: 0.56rem;
+      @include bgImg("../../assets/img/mine/mine_icon5.png");
+      margin-bottom: 0.12rem;
+    }
+    .code-icon {
+      background-image: url(../../assets/img/mine/mine_icon9.png);
+    }
+    .member-icon {
+      background-image: url(../../assets/img/mine/mine_icon7.png);
+    }
+  }
+}
+.menu-box {
+  background-color: #fff;
+  margin-bottom: 0.39rem;
+  .menu-item {
+    padding: 0.28rem 0.35rem;
+  }
+  .menu-icon {
+    width: 0.48rem;
+    height: 0.48rem;
+    margin-right: 2px;
+    @include bgImg("../../assets/img/mine/mine_icon10.png");
+  }
+  .right-icon {
+    width: 0.09rem;
+    height: 0.18rem;
+    @include bgImg("../../assets/img/mine/mine_icon3.png");
+  }
+  .tequan-icon {
+    background-image: url(../../assets/img/mine/mine_icon11.png);
+  }
+  .save-icon {
+    background-image: url(../../assets/img/mine/mine_icon1.png);
+  }
+  .history-icon {
+    background-image: url(../../assets/img/mine/mine_icon2.png);
+  }
+  .friend-icon {
+    background-image: url(../../assets/img/mine/mine_icon6.png);
+  }
 }
 </style>
