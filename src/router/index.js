@@ -30,6 +30,11 @@ export default new Router({
       path: "/reserve",
       name: "Reserve",
       component: () => import("@/views/reserve")
+    },
+    {
+      path: "/wine",
+      name: "Wine",
+      component: () => import("@/views/wine")
     }
   ]
 });
