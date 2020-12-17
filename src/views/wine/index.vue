@@ -64,7 +64,7 @@
           <p class="origin-text">原价<span>￥9600</span></p>
         </div>
       </div>
-      <div class="account-btn">去结算</div>
+      <div class="account-btn" @click="settleFn">去结算</div>
     </div>
   </div>
 </template>
@@ -125,6 +125,9 @@ export default {
       } else {
         window.pageYOffset = sTop;
       }
+    },
+    settleFn() {
+      this.$router.push("/settlement");
     }
   },
   beforeDestroy() {

@@ -6,46 +6,27 @@
         <p>樱桃小丸子</p>
       </div>
       <div class="head-menu flex-h flex-hsb">
-        <div class="head-menu-item">
-          <i class="order-icon"></i>
-          <p>我的订单</p>
-        </div>
-        <div class="head-menu-item">
-          <i class="order-icon code-icon"></i>
-          <p>我的验证码</p>
-        </div>
-        <div class="head-menu-item">
-          <i class="order-icon member-icon"></i>
-          <p>我的会员卡</p>
+        <div
+          class="head-menu-item"
+          v-for="(item, index) in menuTop"
+          :key="index"
+          @click="goto(item.path)"
+        >
+          <i class="order-icon" :class="item.icon"></i>
+          <p>{{ item.name }}</p>
         </div>
       </div>
     </div>
     <div class="menu-box">
-      <div class="menu-item flex-h flex-hsb flex-vc">
+      <div
+        class="menu-item flex-h flex-hsb flex-vc"
+        v-for="(item, index) in menu"
+        :key="index"
+        @click="goto(item.path)"
+      >
         <div class="flex-h flex-vc">
-          <i class="menu-icon"></i>
-          <span>我的优惠卡包</span>
-        </div>
-        <i class="right-icon"></i>
-      </div>
-      <div class="menu-item flex-h flex-hsb flex-vc">
-        <div class="flex-h flex-vc">
-          <i class="menu-icon tequan-icon"></i>
-          <span>我的专属特权</span>
-        </div>
-        <i class="right-icon"></i>
-      </div>
-      <div class="menu-item flex-h flex-hsb flex-vc">
-        <div class="flex-h flex-vc">
-          <i class="menu-icon history-icon"></i>
-          <span>消费历史订单</span>
-        </div>
-        <i class="right-icon"></i>
-      </div>
-      <div class="menu-item flex-h flex-hsb flex-vc">
-        <div class="flex-h flex-vc">
-          <i class="menu-icon save-icon"></i>
-          <span>我的存酒记录</span>
+          <i class="menu-icon" :class="item.icon"></i>
+          <span>{{ item.name }}</span>
         </div>
         <i class="right-icon"></i>
       </div>
@@ -66,15 +47,71 @@
 <script>
 import tabbar from "@/components/tabbar";
 import Tabbar from "../../components/tabbar.vue";
+import { MessageBox } from "mint-ui";
 export default {
   name: "Mine",
   data() {
-    return {};
+    return {
+      menuTop: [
+        {
+          id: 0,
+          path: "",
+          name: "我的订单",
+          icon: ""
+        },
+        {
+          id: 1,
+          path: "",
+          name: "我的验证码",
+          icon: "code-icon"
+        },
+        {
+          id: 2,
+          path: "",
+          name: "我的会员卡",
+          icon: "member-icon"
+        }
+      ],
+      menu: [
+        {
+          id: 0,
+          path: "/coupon",
+          name: "我的优惠卡包",
+          icon: ""
+        },
+        {
+          id: 1,
+          path: "",
+          name: "我的专属特权",
+          icon: "tequan-icon"
+        },
+        {
+          id: 2,
+          path: "/consume-history",
+          name: "消费历史订单",
+          icon: "history-icon"
+        },
+        {
+          id: 3,
+          path: "",
+          name: "我的存酒记录",
+          icon: "save-icon"
+        }
+      ]
+    };
   },
   components: {
     tabbar
   },
-  methods: {}
+  methods: {
+    goto(path) {
+      if (path === "") {
+        MessageBox.alert("功能开发中，敬请期待", "提示");
+        return false;
+      }
+      this.$router.push(path);
+    }
+  }
 };
 </script>
 
