@@ -49,17 +49,17 @@ export default {
           num: 2
         },
         {
-          id: 0,
+          id: 1,
           name: "未使用",
           num: 2
         },
         {
-          id: 0,
+          id: 2,
           name: "已使用",
           num: 2
         },
         {
-          id: 0,
+          id: 3,
           name: "已过期",
           num: 2
         }

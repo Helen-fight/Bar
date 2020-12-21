@@ -84,6 +84,14 @@ export default new Router({
       meta: {
         title: "消费历史订单"
       }
+    },
+    {
+      path: "/take-wine",
+      name: "TakeWine",
+      component: () => import("@/views/take-wine"),
+      meta: {
+        title: "存取酒及记录"
+      }
     }
   ]
 });
