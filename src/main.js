@@ -12,7 +12,11 @@ import "./assets/js/rem.js";
 import MintUI from "mint-ui";
 import "mint-ui/lib/style.css";
 
+import request from "@/assets/js/request";
+
 Vue.use(MintUI);
+
+Vue.prototype.request = request.request;
 
 /* eslint-disable no-new */
 new Vue({

@@ -51,7 +51,7 @@
     </div>
     <!--end: 取酒-->
     <!--start: 存取记录-->
-    <div class="wine-list" style="padding-bottm: 0" v-else-if="tabIndex === 2">
+    <div class="wine-list" style="padding-bottm: 0" v-else>
       <div
         class="wine-item history flex-h flex-hsb"
         v-for="(item, index) in list"
@@ -100,6 +100,11 @@ export default {
       tabIndex: 0,
       list: [1, 2, 3]
     };
+  },
+  mounted() {
+    if (this.$route.query && this.$route.query.tabIndex) {
+      this.tabIndex = Number(this.$route.query.tabIndex);
+    }
   },
   methods: {
     tabFn(index) {
