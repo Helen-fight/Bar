@@ -1,4 +1,5 @@
 <template>
+  <!--预定台房-->
   <div>
     <div class="day-box flex-h">
       <div class="day-item on">

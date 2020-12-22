@@ -1,4 +1,5 @@
 <template>
+  <!--消费记录-->
   <div>
     <div
       class="consume-list"

@@ -1,4 +1,5 @@
 <template>
+  <!--扫码-->
   <div>
     <div class="banner"></div>
     <p class="scan-text">找到房号（台号）二维码【扫一扫】自助下单</p>

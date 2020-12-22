@@ -1,4 +1,5 @@
 <template>
+  <!--快速检票-->
   <div class="home">Ticket page!!!</div>
 </template>
 

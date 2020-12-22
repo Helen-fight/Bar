@@ -1,4 +1,5 @@
 <template>
+  <!--酒水结算-->
   <div>
     <div class="room-box flex-h flex-hsb flex-vc">
       <p>当前房间号：<span class="room">C18</span></p>

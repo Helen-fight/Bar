@@ -17,7 +17,6 @@
 </template>
 
 <script>
-import { MessageBox } from "mint-ui";
 export default {
   name: "Tabbar",
   data() {
@@ -48,7 +47,6 @@ export default {
   mounted() {
     let path = this.$route.path;
     this.menu.forEach((item, index) => {
-      console.log(item, "====", index);
       if (item.path === path) this.now = index;
     });
   },
@@ -59,7 +57,7 @@ export default {
           path: this.menu[index].path
         });
       } else if (index === 2) {
-        MessageBox.alert("功能开发中，敬请期待", "提示");
+        this.$messagebox.alert("功能开发中，敬请期待", "提示");
       }
     }
   }
