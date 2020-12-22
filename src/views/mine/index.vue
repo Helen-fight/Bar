@@ -31,7 +31,7 @@
         <i class="right-icon"></i>
       </div>
     </div>
-    <div class="menu-box">
+    <div class="menu-box" @click="goto('')">
       <div class="menu-item flex-h flex-hsb flex-vc">
         <div class="flex-h flex-vc">
           <i class="menu-icon friend-icon"></i>
@@ -47,18 +47,17 @@
 <script>
 import tabbar from "@/components/tabbar";
 import Tabbar from "../../components/tabbar.vue";
-import { MessageBox } from "mint-ui";
 export default {
   name: "Mine",
   data() {
     return {
       menuTop: [
-        {
+        /* {
           id: 0,
           path: "",
           name: "我的订单",
           icon: ""
-        },
+        }, */
         {
           id: 1,
           path: "",
@@ -93,7 +92,7 @@ export default {
         },
         {
           id: 3,
-          path: "",
+          path: "/take-wine?tabIndex=2",
           name: "我的存酒记录",
           icon: "save-icon"
         }
@@ -106,7 +105,7 @@ export default {
   methods: {
     goto(path) {
       if (path === "") {
-        MessageBox.alert("功能开发中，敬请期待", "提示");
+        this.$messagebox.alert("功能开发中，敬请期待", "提示");
         return false;
       }
       this.$router.push(path);

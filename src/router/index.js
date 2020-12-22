@@ -99,6 +99,14 @@ export default new Router({
       meta: {
         title: "存取酒及记录"
       }
+    },
+    {
+      path: "/bind-phone",
+      name: "BindPhone",
+      component: () => import("@/views/bind-phone"),
+      meta: {
+        title: "绑定手机号"
+      }
     }
   ]
 });

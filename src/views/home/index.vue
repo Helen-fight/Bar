@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="banner">
-      <div class="scan-btn"></div>
+      <div class="scan-btn" @click="scanFn"></div>
     </div>
     <div class="menu-box">
       <div class="menu-main flex-h flex-hsb">
@@ -14,17 +14,17 @@
             <div class="call-serve" @click="goto('/reserve')">
               <p>预定<br />台房</p>
             </div>
-            <div class="call-serve reserve">
+            <div class="call-serve reserve" @click="goto('')">
               <p>呼叫<br />服务</p>
             </div>
           </div>
-          <div class="save-box">
+          <div class="save-box" @click="goto('/take-wine')">
             <p class="save-text">存取酒</p>
             <p>好酒只为好时光</p>
           </div>
         </div>
       </div>
-      <div class="address-box flex-h flex-hsb flex-vc">
+      <div class="address-box flex-h flex-hsb flex-vc" @click="lookStore">
         <div>
           <p class="check-box">
             <span>查看门店</span>
@@ -36,10 +36,14 @@
       </div>
     </div>
     <div class="store-box flex-h flex-hsb">
-      <div class="store"><p class="store-text">限时秒杀</p></div>
-      <div class="store score"><p class="store-text">积分商城</p></div>
+      <div class="store" @click="goto('')">
+        <p class="store-text">限时秒杀</p>
+      </div>
+      <div class="store score" @click="goto('')">
+        <p class="store-text">积分商城</p>
+      </div>
     </div>
-    <div class="member-card flex-h flex-hsb">
+    <div class="member-card flex-h flex-hsb" @click="goto('')">
       <div>
         <p class="my-card">我的会员卡</p>
         <p>会员积分可兑换丰富灵感周边</p>
@@ -62,7 +66,14 @@ export default {
   },
   methods: {
     goto(path) {
-      this.$router.push(path);
+      if (path) this.$router.push(path);
+      else this.$messagebox.alert("功能开发中，敬请期待", "提示");
+    },
+    lookStore() {
+      this.$messagebox.alert("功能开发中，敬请期待", "提示");
+    },
+    scanFn() {
+      this.$toast("微信扫码");
     }
   }
 };
@@ -161,7 +172,7 @@ export default {
       height: 0.72rem;
       padding-left: 0.42rem;
       border-left: 0.04rem solid rgba(#000, 0.2);
-      background: url(../../assets/img/home/call_icon.png) right 0 no-repeat;
+      background: url(../../assets/img/home/call_icon.png) 0.42rem 0 no-repeat;
       background-size: 0.72rem 0.72rem;
     }
   }
