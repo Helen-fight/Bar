@@ -21,14 +21,16 @@ export default new Router({
       meta: {
         title: "我的"
       }
-    },{
+    },
+    {
       path: "/mine/memberCard",
       name: "MemberCard",
       component: () => import("@/views/mine/memberCard/memberCard"),
       meta: {
         title: "会员卡"
       }
-    },{
+    },
+    {
       path: "/mine/myCard",
       name: "MyCard",
       component: () => import("@/views/mine/myCard/myCard"),

@@ -66,7 +66,7 @@ export default {
         },
         {
           id: 2,
-          path: "",
+          path: "/mine/myCard",
           name: "我的会员卡",
           icon: "member-icon"
         }

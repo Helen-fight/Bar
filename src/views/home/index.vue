@@ -43,7 +43,7 @@
         <p class="store-text">积分商城</p>
       </div>
     </div>
-    <div class="member-card flex-h flex-hsb" @click="goto('')">
+    <div class="member-card flex-h flex-hsb" @click="goto('/mine/memberCard')">
       <div>
         <p class="my-card">我的会员卡</p>
         <p>会员积分可兑换丰富灵感周边</p>
