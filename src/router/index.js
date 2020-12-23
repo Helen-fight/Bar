@@ -33,7 +33,7 @@ export default new Router({
       name: "MyCard",
       component: () => import("@/views/mine/myCard/myCard"),
       meta: {
-        title: "会员卡"
+        title: "我的会员卡"
       }
     },
     {
