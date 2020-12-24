@@ -24,18 +24,18 @@
         :key="index"
         @click="goto(item.path)"
       >
-        <div class="flex-h flex-vc">
+        <div class="flex-h">
           <i class="menu-icon" :class="item.icon"></i>
-          <span>{{ item.name }}</span>
+          <span class="menu-text">{{ item.name }}</span>
         </div>
         <i class="right-icon"></i>
       </div>
     </div>
     <div class="menu-box" @click="goto('')">
       <div class="menu-item flex-h flex-hsb flex-vc">
-        <div class="flex-h flex-vc">
+        <div class="flex-h">
           <i class="menu-icon friend-icon"></i>
-          <span>我的好友</span>
+          <span class="menu-text">我的好友</span>
         </div>
         <i class="right-icon"></i>
       </div>
@@ -80,7 +80,7 @@ export default {
         },
         {
           id: 1,
-          path: "",
+          path: "/mine/privilege",
           name: "我的专属特权",
           icon: "tequan-icon"
         },
@@ -165,8 +165,12 @@ export default {
   .menu-icon {
     width: 0.48rem;
     height: 0.48rem;
-    margin-right: 2px;
+    vertical-align: middle;
     @include bgImg("../../assets/img/mine/mine_icon10.png");
+  }
+  .menu-text {
+    margin-top: 0.1rem;
+    margin-left: 2px;
   }
   .right-icon {
     width: 0.09rem;

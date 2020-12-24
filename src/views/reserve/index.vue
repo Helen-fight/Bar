@@ -27,7 +27,7 @@
         <span class="week">星期一</span>
       </div>
     </div>
-    <div class="reserve-btn"></div>
+    <a href="tel:15280568356" class="reserve-btn"></a>
     <p class="reserve-no">
       您选择的日期暂未发布网络购房！<br />您可使用电话预约，预约热线：075523907939<br />不便之处敬请谅解！
     </p>
@@ -52,9 +52,7 @@ export default {
 
 <style lang="scss" scoped>
 .day-box {
-  margin-top: 0.33rem;
-  margin-left: 0.14rem;
-  padding-bottom: 0.24rem;
+  margin: 0.33rem 0.14rem 0.24rem;
   overflow-x: scroll;
   .day-item {
     width: 1.3rem;
@@ -88,6 +86,7 @@ export default {
   }
 }
 .reserve-btn {
+  display: block;
   width: 1.12rem;
   height: 1.12rem;
   background: url(../../assets/img/reserve_icon.png) no-repeat;

@@ -32,7 +32,7 @@
           </p>
           <p>厦门市集美区同集大道668号</p>
         </div>
-        <div class="call-btn"></div>
+        <a class="call-btn" href="tel:15280568356"></a>
       </div>
     </div>
     <div class="store-box flex-h flex-hsb">

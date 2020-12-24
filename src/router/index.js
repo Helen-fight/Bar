@@ -23,6 +23,14 @@ export default new Router({
       }
     },
     {
+      path: "/mine/privilege",
+      name: "Privilege",
+      component: () => import("@/views/mine/privilege"),
+      meta: {
+        title: "我的专属特权"
+      }
+    },
+    {
       path: "/mine/memberCard",
       name: "MemberCard",
       component: () => import("@/views/mine/memberCard/memberCard"),
