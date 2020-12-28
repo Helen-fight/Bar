@@ -16,6 +16,10 @@ import request from "@/assets/js/request";
 
 Vue.use(MintUI);
 
+// vconsole 调试
+import Vconsole from "vconsole";
+const vConsole = new Vconsole();
+
 Vue.prototype.request = request.request;
 
 /* eslint-disable no-new */

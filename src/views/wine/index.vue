@@ -39,7 +39,9 @@
             </div>
           </div>
           <div class="wine-content">
-            <p class="wine-name">Heineken/喜力啤酒{{ idx }}<span> (支)</span></p>
+            <p class="wine-name">
+              Heineken/喜力啤酒{{ idx }}<span> (支)</span>
+            </p>
             <div class="flex-h flex-hsb flex-vc">
               <span class="huiyuan">会员价</span>
               <div class="count-box flex-h">
@@ -82,12 +84,15 @@ export default {
     };
   },
   mounted() {
-    this.roomHeight =
-      document.getElementsByClassName("room-box")[0].offsetHeight + 8;
-    this.listDom = document.querySelectorAll(".wine-item");
-    document.addEventListener("scroll", this.onScroll);
+    this.initScroll();
   },
   methods: {
+    initScroll() {
+      this.roomHeight =
+        document.getElementsByClassName("room-box")[0].offsetHeight + 8;
+      this.listDom = document.querySelectorAll(".wine-item");
+      document.addEventListener("scroll", this.onScroll);
+    },
     menuFn(index) {
       this.menuIndex = index;
     },
@@ -119,19 +124,20 @@ export default {
       var anchor = this.$el.querySelector(name);
       this.menuIndex = index;
       let sTop = anchor.offsetTop - this.roomHeight;
-      if (document.documentElement) {
-        document.documentElement.scrollTop = sTop;
-      } else if (document.body) {
+      document.body.scrollTop = sTop;
+      /* if (document.body) {
         document.body.scrollTop = sTop;
+      } else if (document.documentElement) {
+        document.documentElement.scrollTop = sTop;
       } else {
         window.pageYOffset = sTop;
-      }
+      } */
     },
     settleFn() {
       this.$router.push("/settlement");
     },
-    backHome(){
-      this.$router.replace({path: "/"})
+    backHome() {
+      this.$router.replace({ path: "/" });
     }
   },
   beforeDestroy() {
@@ -153,7 +159,7 @@ export default {
   z-index: 3;
   color: #fff;
   .room {
-    color: #FF314F;
+    color: #ff314f;
   }
   .room-icon {
     width: 0.42rem;
@@ -217,7 +223,7 @@ export default {
       text-overflow: ellipsis;
       overflow: hidden;
       span {
-        color:#FF314F;
+        color: #ff314f;
       }
     }
     .huiyuan {
@@ -227,7 +233,7 @@ export default {
       text-align: center;
       font-size: 0.22rem;
       color: #fff;
-      background-color: #FF314F;
+      background-color: #ff314f;
     }
     .count-box {
       border: 1px solid #ddd;
@@ -246,12 +252,12 @@ export default {
       span {
         width: 0.36rem;
         text-align: center;
-        color: #FF314F;
+        color: #ff314f;
       }
     }
     .price-box {
       margin-top: 0.16rem;
-      color:#FF314F;
+      color: #ff314f;
     }
     .origin-price {
       margin-left: 5px;
@@ -268,16 +274,16 @@ export default {
     }
     &.sell-null .wine-name,
     &.sell-null .wine-name span {
-      color: #2A2A2A;
+      color: #2a2a2a;
     }
     &.sell-null .huiyuan {
-      background-color:#2A2A2A;
+      background-color: #2a2a2a;
     }
     &.sell-null .price-box {
-      color:#7D212F;
+      color: #7d212f;
     }
     &.sell-null .origin-price {
-      color: #8C8C8C;
+      color: #8c8c8c;
     }
     &.sell-null .add-btn {
       background-image: url(../../assets/img/wine/add_btn_null.png);
@@ -291,7 +297,7 @@ export default {
   bottom: 1.4rem;
   width: 1.9rem;
   padding: 0.2rem 0;
-  background-color:#070707;
+  background-color: #070707;
   border-radius: 0.1rem;
   overflow-y: scroll;
   .menu-item {
@@ -302,7 +308,7 @@ export default {
     &.on {
       position: relative;
       background-color: #121212;
-      color: #FF314F;
+      color: #ff314f;
     }
     &.on::before {
       position: absolute;
@@ -312,7 +318,7 @@ export default {
       width: 4px;
       height: 4px;
       border-radius: 50%;
-      background-color: #FF314F;
+      background-color: #ff314f;
     }
   }
 }
@@ -328,7 +334,7 @@ export default {
   box-shadow: 0px -1px 0px 0px rgba(0, 0, 0, 0.15);
   .price {
     font-size: 0.34rem;
-    color:#FF314F;
+    color: #ff314f;
     margin-bottom: 0.12rem;
   }
   .origin-text {
@@ -344,7 +350,7 @@ export default {
     text-align: center;
     font-size: 0.34rem;
     color: #fff;
-    background-color:#FF314F;
+    background-color: #ff314f;
     border-radius: 22px;
   }
 }

@@ -1,5 +1,6 @@
 import axios from "axios";
 import qs from "qs";
+import { authorize } from "@/assets/js/authorize";
 
 if (process.env.NODE_ENV === "production") {
   //设置生产环境域名，开发环境不需要域名
@@ -71,12 +72,10 @@ function requestOk(res, options, that) {
       options.failFn(res);
       return false;
     }
-    if (res.data.code === 1002) {
-      //登录失效
+    if (res.data.code === -1 || res.data.code === 1002) {
+      // -1重新登录，1002token不存在或已过期；重新跳转授权登录
       window.localStorage.removeItem("userInfo");
-      if (that.$route.path !== "/MarketBlack") {
-        that.$toast(res.data.msg);
-      }
+      authorize();
     } else if (res.data.code === 1005) {
       //账号被封
       window.localStorage.removeItem("userInfo");
