@@ -3,7 +3,7 @@
   <div>
     <div class="room-box flex-h flex-hsb flex-vc">
       <p>当前房间号：<span class="room">C18</span></p>
-      <i class="room-icon"></i>
+      <i class="room-icon" @click="backHome"></i>
     </div>
     <div class="wine-list">
       <div
@@ -14,7 +14,7 @@
         <img class="wine-img" src="" alt="" />
         <div class="wine-content">
           <p class="wine-name">
-            Heineken/喜力啤酒{{ index + 1 }}<span>(支)</span>
+            Heineken/喜力啤酒{{ index + 1 }}<span> (支)</span>
           </p>
           <div class="flex-h flex-hsb flex-vc">
             <span class="huiyuan">会员价</span>
@@ -51,7 +51,11 @@ export default {
       list: [1, 2, 3, 4, 5, 6, 7, 8]
     };
   },
-  methods: {}
+  methods: {
+    backHome(){
+      this.$router.replace({path: "/"})
+    }
+  }
 };
 </script>
 
@@ -63,26 +67,28 @@ export default {
   right: 0;
   padding: 0 0.45rem;
   height: 1rem;
-  background-color: #fff;
+  background-color: #070707;
   font-size: 0.32rem;
   z-index: 3;
+  color: #fff;
   .room {
-    color: #f88346;
+    color: #FF314F;
   }
   .room-icon {
     width: 0.42rem;
     height: 0.42rem;
-    background: url(../../assets/img/wine/wine_icon.png) no-repeat;
+    background: url(../../assets/img/wine/icon_back_home.png) no-repeat;
     background-size: 100%;
   }
 }
 .wine-list {
   margin-top: 1.14rem;
-  margin-bottom: 1.4rem;
+  padding-bottom: 1.4rem;
   .wine-item {
     padding: 0.36rem;
     margin-bottom: 0.14rem;
-    background-color: #fff;
+    background-color: #070707;
+    color: #fff;
     .wine-img {
       width: 1.4rem;
       height: 1.4rem;
@@ -99,7 +105,7 @@ export default {
       text-overflow: ellipsis;
       overflow: hidden;
       span {
-        color: #f88346;
+        color:#FF314F;
       }
     }
     .huiyuan {
@@ -109,7 +115,7 @@ export default {
       text-align: center;
       font-size: 0.22rem;
       color: #fff;
-      background-color: #f88346;
+      background-color: #FF314F;
     }
     .count-box {
       border: 1px solid #ddd;
@@ -121,16 +127,18 @@ export default {
         text-align: center;
         border-right: 1px solid #ddd;
         border-left: 1px solid #ddd;
+        background-color: #070707;
+        color: #fff;
       }
       span {
         width: 0.45rem;
         text-align: center;
-        color: #f88346;
+        color:#FF314F;
       }
     }
     .price-box {
       margin-top: 0.12rem;
-      color: #f88346;
+      color: #FF314F;
     }
     .origin-price {
       margin-left: 5px;
@@ -147,11 +155,12 @@ export default {
   bottom: 0;
   padding: 0 0.45rem;
   height: 1.2rem;
-  background: #fff;
+  background: #121212;
+  color: #fff;
   box-shadow: 0px -1px 0px 0px rgba(0, 0, 0, 0.15);
   .price {
     font-size: 0.34rem;
-    color: #f88346;
+    color: #FF314F;
     margin-bottom: 0.12rem;
   }
   .origin-text {
@@ -167,7 +176,7 @@ export default {
     text-align: center;
     font-size: 0.34rem;
     color: #fff;
-    background-color: #f88346;
+    background-color:#FF314F;
     border-radius: 22px;
   }
 }

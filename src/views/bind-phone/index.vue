@@ -40,7 +40,6 @@ export default {
     };
   },
   mounted() {
-    this.$indicator.open();
   },
   methods: {
     getCode() {
@@ -112,12 +111,12 @@ export default {
 <style lang="scss" scoped>
 .bind-box {
   height: 100vh;
-  background-color: #f5f5f9;
   box-sizing: border-box;
   padding: 0 0.24rem;
+  color: #fff;
   .bind-item {
     padding: 0.4rem 0.1rem;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #070707;
     .right-icon {
       width: 0.09rem;
       height: 0.18rem;
@@ -127,12 +126,15 @@ export default {
     }
     .phone {
       border: 0;
-      background-color: #f5f5f9;
+      background-color: #121212;
+      color: #fff;
     }
     .code-btn {
-      color: #009ce3;
+      color:#FF314F;
       padding-left: 0.32rem;
-      border-left: 1px solid #ddd;
+      height: .4rem;
+      line-height: .4rem;
+      border-left: 1px solid #FE344B;
     }
   }
   .bind-btn {
@@ -141,7 +143,7 @@ export default {
     font-size: 0.34rem;
     text-align: center;
     color: #fff;
-    background-color: #009ce3;
+    background-color: #FF314F;
     border-radius: 22px;
     margin-top: 0.8rem;
   }

@@ -30,7 +30,7 @@
             <img class="wine-img" src="" alt="" />
             <div class="wine-content">
               <p class="wine-name">
-                Heineken/喜力啤酒{{ index + 1 }}<span>(支)</span>
+                Heineken/喜力啤酒{{ index + 1 }}<span> (支)</span>
               </p>
               <div class="flex-h flex-hsb flex-vc">
                 <span>存酒数量：2</span>
@@ -61,7 +61,7 @@
         <div class="wine-content">
           <div class="flex-h flex-hsb">
             <p class="wine-name">
-              Heineken/喜力啤酒{{ index + 1 }}<span>(支)</span>
+              Heineken/喜力啤酒{{ index + 1 }}<span> (支)</span>
             </p>
             <span class="save-text">已存</span>
           </div>
@@ -122,22 +122,22 @@ export default {
   top: 0;
   padding: 0 0.3rem;
   height: 0.9rem;
-  background-color: #fff;
+  background-color: #070707;
   .tab-item {
     padding-top: 0.36rem;
     padding-bottom: 0.23rem;
-    border-bottom: 2px solid #fff;
-    color: #999;
+    border-bottom: 2px solid #070707;
+    color: #fff;
     &.on {
-      color: #222;
-      border-bottom: 2px solid #f88346;
+      color: #FF314F;
+      border-bottom: 2px solid #FF314F;
     }
   }
 }
 .note {
   margin-top: 4.6rem;
   font-size: 0.26rem;
-  color: #353432;
+  color: #fff;
   text-align: center;
 }
 .scan-btn {
@@ -147,8 +147,8 @@ export default {
   text-align: center;
   font-size: 0.38rem;
   color: #fff;
-  background-color: #009ce3;
-  border-radius: 0.1rem;
+  background-color: #FF314F;
+  border-radius: 24px;
 }
 .take-box {
   position: fixed;
@@ -159,9 +159,9 @@ export default {
   line-height: 1rem;
   text-align: center;
   color: #fff;
+  background-color: #070707;
   .take-text {
     width: 72%;
-    background-color: #3e3e3e;
   }
   .take-scan {
     width: 28%;
@@ -177,7 +177,8 @@ export default {
   .wine-item {
     padding: 0.36rem;
     margin-bottom: 1px;
-    background-color: #fff;
+    background-color: #070707;
+    color: #fff;
     &.history {
       margin-bottom: 0.14rem;
     }
@@ -201,7 +202,7 @@ export default {
       text-overflow: ellipsis;
       overflow: hidden;
       span {
-        color: #f88346;
+        color: #FF314F;
       }
     }
     .count-box {
@@ -209,11 +210,14 @@ export default {
       height: 0.45rem;
       line-height: 0.45rem;
       font-size: 0.22rem;
+      border-radius: 2px;
       input {
         width: 0.6rem;
         text-align: center;
         border-right: 1px solid #ddd;
         border-left: 1px solid #ddd;
+        background-color: #070707;
+        color: #fff;
       }
       span {
         width: 0.45rem;
@@ -226,7 +230,7 @@ export default {
     }
   }
   .take-btn-box {
-    background-color: #fff;
+    background-color:#070707;
     padding: 0.13rem 0.6rem;
     text-align: right;
     .take-btn {
@@ -236,7 +240,7 @@ export default {
       line-height: 0.6rem;
       text-align: center;
       border-radius: 20px;
-      background-color: #f88346;
+      background-color: #FF314F;
       color: #fff;
     }
   }

@@ -19,12 +19,14 @@ export default {
 
 <style lang="scss" scoped>
 .banner {
-  height: 4.9rem;
-  background: url(../../assets/img/scan.png) no-repeat;
+  height: 3rem;
+  width: 3rem;
+  margin: 1.3rem auto;
+  background: url(../../assets/img/scan_bg.png) no-repeat;
   background-size: 100%;
 }
 .scan-text {
-  color: #353432;
+  color: #fff;
   text-align: center;
   margin-top: 0.9rem;
   margin-bottom: 0.52rem;
@@ -37,6 +39,6 @@ export default {
   font-size: 0.38rem;
   color: #fff;
   border-radius: 0.1rem;
-  background-color: #009ce3;
+  background-color:#FF314F;
 }
 </style>

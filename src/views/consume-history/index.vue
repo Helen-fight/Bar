@@ -15,11 +15,11 @@
             <p>消费金额：1990元</p>
           </div>
           <div
-            class="detail-btn"
-            :class="item.show ? 'show' : ''"
+            class="detail-btn flex-h flex-hc flex-vc"
             @click="showDetail(index)"
           >
-            详情
+            <span>详情</span>
+            <i class="icon-forward" :class="item.show ? 'show' : ''"></i>
           </div>
         </div>
         <div class="detail-box" :class="item.show ? 'show' : ''">
@@ -84,28 +84,34 @@ export default {
     padding: 0.36rem 0.4rem;
     line-height: 0.52rem;
     margin-bottom: 2px;
-    background-color: #fff;
+    background-color: #070707;
+    color: #fff;
   }
   .detail-btn {
     width: 1.8rem;
     height: 0.6rem;
     line-height: 0.6rem;
     text-align: center;
-    border: 1px solid #f88346;
+    border: 1px solid #FF314F;
     border-radius: 22px;
-    color: #f88346;
-    background-image: url(../../assets/img/forward_icon.png);
-    background-position: 1.3rem center;
-    background-repeat: no-repeat;
-    background-size: 0.1rem 0.18rem;
-    &.show {
-      background-image: url(../../assets/img/forward_icon2.png);
-      background-size: 0.18rem 0.1rem;
+    color: #FF314F;
+    .icon-forward{
+      width: 0.1rem;
+      height: 0.18rem;
+      margin-left: .16rem;
+      margin-top: 2px;
+      background: url(../../assets/img/forward_icon.png) no-repeat;
+      background-size: 100%;
+      transition: rotate ease .5s;
+      &.show {
+        transform: rotate(90deg);
+      }
     }
   }
   .detail-box {
     max-height: 0;
-    background-color: #fff;
+    background-color: #070707;
+    color: #fff;
     overflow: hidden;
     transition: max-height 0.3s;
     -webkit-transition: max-height 0.3s;

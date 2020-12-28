@@ -34,12 +34,12 @@ export default {
           icon: "mine-icon",
           path: "/mine"
         },
-        {
+        /* {
           id: 2,
           name: "快速检票",
           icon: "ticket-icon",
           path: "/ticket"
-        }
+        } */
       ],
       now: 0
     };
@@ -67,18 +67,20 @@ export default {
 <style lang="scss" scoped>
 .kong {
   height: 1rem;
+  background-color: #121212;
 }
 .nav-box {
   position: fixed;
   left: 0;
   right: 0;
   bottom: 0;
-  padding: 0.1rem 0.7rem;
-  background-color: #fff;
+  padding: 5px 1.3rem;
+  background-color: #070707;
   .nav-item {
     font-size: 0.2rem;
-    color: #b0b0b0;
+    color: #B0B0B0;
     text-align: center;
+    line-height: .26rem;
     .nav-icon {
       display: inline-block;
       width: 0.52rem;
@@ -94,7 +96,7 @@ export default {
       background-image: url("../assets/img/navIcon/ticket.png");
     }
     &.on {
-      color: #333;
+      color: #FF314F;
       .home-icon {
         background-image: url("../assets/img/navIcon/home_on.png");
       }
