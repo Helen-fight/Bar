@@ -21,7 +21,7 @@
     <div v-else-if="tabIndex === 1">
       <div class="take-box flex-h">
         <p class="take-text">自助取酒请扫房台二维码</p>
-        <div class="take-scan">扫一扫</div>
+        <div class="take-scan" @click="scanTap">扫一扫</div>
       </div>
 
       <div class="wine-list">
@@ -35,9 +35,9 @@
               <div class="flex-h flex-hsb flex-vc">
                 <span>存酒数量：2</span>
                 <div class="count-box flex-h">
-                  <span>-</span>
-                  <input class="wine-num" :value="index + 1" type="number" />
-                  <span>+</span>
+                  <span :class="{'disabled': item.ipt===item.num}" @click="cutTakeWineNum(item)">-</span>
+                  <input class="wine-num" v-model="item.ipt" type="number" />
+                  <span :class="{'disabled': item.ipt===item.num}" @click="addTakeWineNum(item)">+</span>
                 </div>
               </div>
               <p class="price-box">剩余时间：20天</p>
@@ -75,6 +75,12 @@
 </template>
 
 <script>
+import {
+  saveWine, 
+  takeWine,
+  historySaveWine,
+  overdueWine
+} from '@/api/takeWine.js';
 export default {
   name: "TakeWine",
   data() {
@@ -109,6 +115,74 @@ export default {
   methods: {
     tabFn(index) {
       this.tabIndex = index;
+      if(index == 1) this.getTakeWineList();
+      if(index == 2) this.getHistorySaveWineList();
+      if(index == 3) this.getOverdueWineList();
+    },
+    scanTap() {
+      wx.scanQRCode({
+        needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+        scanType: ["qrCode","barCode"], // 可以指定扫二维码还是一维码，默认二者都有
+        success: function (res) {
+          var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
+          
+          saveWine({
+            data: {
+              id: result,
+              num: 0,
+              table_num: result
+            },
+            loading: true
+          }).then(res => {
+            this.$toast('成功存酒!');
+          });
+        }
+      });
+    },
+    // 我要取酒
+    getTakeWineList() {
+      this.list = [];
+      takeWine({
+        // data: {uid: },
+        loading: true
+      }).then(res => {
+        let list = res.data || []
+        this.list = list.reduce((newArr, currItem, currInx, arr) => {
+          currItem.ipt = 0;
+          newArr.push(currItem);
+          return newArr;
+        }, []);
+      }).catch(err=>{
+
+      });
+    },
+    cutTakeWineNum(item) {
+      if(item.ipt === item.num) return;
+      item.ipt--;
+    },
+    addTakeWineNum(item) {
+      if(item.ipt === item.num) return;
+      item.ipt++;
+    },
+    getHistorySaveWineList() {
+      this.list = [];
+      historySaveWine({
+        loading: true
+      }).then(res => {
+        this.list = res.data || []
+      }).catch(err=>{
+        
+      });
+    },
+    getOverdueWineList() {
+      this.list = [];
+      overdueWine({
+        loading: true
+      }).then(res => {
+        this.list = res.data || []
+      }).catch(err=>{
+        
+      });
     }
   }
 };
@@ -203,6 +277,9 @@ export default {
       overflow: hidden;
       span {
         color: #FF314F;
+        &.disabled{
+          color: #ddd;
+        }
       }
     }
     .count-box {
