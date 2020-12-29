@@ -1,6 +1,7 @@
 import axios from "axios";
 import qs from "qs";
 import { authorize } from "@/assets/js/authorize";
+import { Indicator, Toast } from "mint-ui";
 
 if (process.env.NODE_ENV === "production") {
   //设置生产环境域名，开发环境不需要域名
@@ -9,10 +10,11 @@ if (process.env.NODE_ENV === "production") {
 axios.defaults.withCredentials = true;
 
 let request = function(options) {
+  console.log(options, "ooo");
   if (!options.method) {
     options.method = "post";
   }
-  if (options.loading) this.$indicator.open();
+  if (options.loading) Indicator.open(); //this.$indicator.open();
 
   if (!options.header) {
     if (options.method.toLowerCase() == "post") {
@@ -59,8 +61,8 @@ let request = function(options) {
   }
 };
 
-function requestOk(res, options, that) {
-  if (options.loading) that.$indicator.close();
+function requestOk(res, options) {
+  if (options.loading) Indicator.close();
 
   if (res.data.code === 1) {
     if (options.successFn && typeof options.successFn == "function") {
@@ -75,19 +77,22 @@ function requestOk(res, options, that) {
     if (res.data.code === -1 || res.data.code === 1002) {
       // -1重新登录，1002token不存在或已过期；重新跳转授权登录
       window.localStorage.removeItem("userInfo");
-      authorize();
+      Toast("登录过期，请重新登录");
+      setTimeout(() => {
+        authorize();
+      }, 300);
     } else if (res.data.code === 1005) {
       //账号被封
       window.localStorage.removeItem("userInfo");
-      that.$toast(res.data.msg);
+      Toast(res.data.msg);
     } else {
-      that.$toast(res.data.msg);
+      Toast(res.data.msg);
     }
   }
 }
 
-function requestError(error, options, that) {
-  if (options.loading) that.$indicator.close();
+function requestError(error, options) {
+  if (options.loading) Indicator.close();
   if (options.errorFn && typeof options.errorFn == "function")
     options.errorFn();
   //console.log('网络问题请稍后重试')
@@ -96,7 +101,7 @@ function requestError(error, options, that) {
     error.message.includes("504") ||
     error.message === "Network Error"
   )
-    that.$toast("请求超时，请稍后重试");
+    Toast("请求超时，请稍后重试");
 }
 
 export default {

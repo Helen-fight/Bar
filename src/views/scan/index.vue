@@ -3,7 +3,7 @@
   <div>
     <div class="banner"></div>
     <p class="scan-text">找到房号（台号）二维码【扫一扫】自助下单</p>
-    <div class="scan-btn">扫一扫</div>
+    <div class="scan-btn" @click="scanFn">扫一扫</div>
   </div>
 </template>
 
@@ -13,7 +13,9 @@ export default {
   data() {
     return {};
   },
-  methods: {}
+  methods: {
+    scanFn() {}
+  }
 };
 </script>
 
@@ -39,6 +41,6 @@ export default {
   font-size: 0.38rem;
   color: #fff;
   border-radius: 0.1rem;
-  background-color:#FF314F;
+  background-color: #ff314f;
 }
 </style>

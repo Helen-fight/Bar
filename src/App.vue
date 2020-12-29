@@ -38,7 +38,7 @@ export default {
             timestamp: "", // 必填，生成签名的时间戳
             nonceStr: "", // 必填，生成签名的随机串
             signature: "", // 必填，签名，见附录1
-            jsApiList: [] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+            jsApiList: ["scanQRCode", "openLocation"] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
           });
         }
       });
@@ -46,6 +46,15 @@ export default {
     login(code) {
       // 调用登录接口
       console.log(code);
+      this.request({
+        url: "/api/v1/user/getUserInfoByCode",
+        data: {
+          code: code
+        },
+        successFn(res) {
+          console.log(res, "用户数据");
+        }
+      });
     }
   }
 };
