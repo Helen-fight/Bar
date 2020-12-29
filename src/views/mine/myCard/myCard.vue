@@ -10,7 +10,7 @@
               <span class="user-id">HSQ0000139</span>
             </div>
           </div>
-          <span class="btn" @click="applyCard">去充值</span>
+          <span class="btn" @click="recharge">去充值</span>
         </div>
 
         <div class="flex-h username">
@@ -49,7 +49,7 @@
           </span>          
         </div>
         <div class="item-right">
-          <span class="btn">积分兑换</span>
+          <span class="btn" @click="go">积分兑换</span>
         </div>
       </li>
       <li class="flex-h flex-hsb flex-vc item">
@@ -133,9 +133,8 @@ export default {
       }
       this.$router.push(path);
     },
-    applyCard(item) {
+    recharge(item) {
       this.showPopup = true;
-      this.inviteCode = '';
     }
   }
 };

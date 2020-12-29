@@ -81,7 +81,7 @@
             <div class="f-bold label">生效日期：</div>
             <div class="c-orange value">即买即生效</div>
           </div>
-          <div class="btn-pay">微信支付</div>
+          <div class="btn-pay" @click="getWXPay">微信支付</div>
         </div>
       </div>
     </mt-popup>
@@ -96,6 +96,10 @@ export default {
   data() {
     return {
       showPopup: false,
+      popup: {
+        title: '黄金卡',
+        price: 1000
+      },
       inviteCode: "",
       cardList: [
         {
@@ -127,6 +131,9 @@ export default {
     applyCard(item) {
       this.showPopup = true;
       this.inviteCode = "";
+    },
+    getWXPay(){
+
     }
   }
 };
