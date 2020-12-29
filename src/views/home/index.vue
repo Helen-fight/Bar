@@ -76,16 +76,6 @@ export default {
   components: {
     tabbar
   },
-  mounted() {
-    this.request({
-      url: "/open",
-      data: {},
-      loading: true,
-      successFn(res) {
-        cosnole.log(res);
-      }
-    });
-  },
   methods: {
     goto(path) {
       if (path === "/wine") {

@@ -2,7 +2,9 @@
   <!--在线酒水-->
   <div>
     <div class="room-box flex-h flex-hsb flex-vc">
-      <p>当前房间号：<span class="room">C18</span></p>
+      <p>
+        当前房间号：<span class="room">{{ room }}</span>
+      </p>
       <i class="room-icon" @click="backHome"></i>
     </div>
     <div class="menu-box">
@@ -80,13 +82,23 @@ export default {
       list: [1, 2, 3, 4, 5, 6, 7, 8],
       menuIndex: 0,
       roomHeight: 0,
-      listDom: []
+      listDom: [],
+      room: "C18"
     };
   },
-  mounted() {
+  created() {
     this.initScroll();
   },
   methods: {
+    getdata() {
+      //  获取酒水列表
+      this.request({
+        url: "/api/v1/product/index",
+        successFn(res) {
+          console.lo(res, "酒水列表");
+        }
+      });
+    },
     initScroll() {
       this.roomHeight =
         document.getElementsByClassName("room-box")[0].offsetHeight + 8;

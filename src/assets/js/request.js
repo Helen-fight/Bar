@@ -10,7 +10,6 @@ if (process.env.NODE_ENV === "production") {
 axios.defaults.withCredentials = true;
 
 let request = function(options) {
-  console.log(options, "ooo");
   if (!options.method) {
     options.method = "post";
   }
@@ -29,8 +28,7 @@ let request = function(options) {
     options.header["Content-Type"] != "multipart/form-data"
   ) {
     let userinfo = JSON.parse(window.localStorage.getItem("userInfo"));
-    options.data.userid = userinfo.id;
-    options.data.token = userinfo.token;
+    options.data.uid = userinfo.userid;
   }
 
   if (options.method.toLowerCase() == "get") {
@@ -82,7 +80,7 @@ function requestOk(res, options) {
         authorize();
       }, 300);
     } else if (res.data.code === 1005) {
-      //账号被封
+      // 1005账号被封
       window.localStorage.removeItem("userInfo");
       Toast(res.data.msg);
     } else {
