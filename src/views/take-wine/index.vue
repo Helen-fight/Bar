@@ -35,9 +35,17 @@
               <div class="flex-h flex-hsb flex-vc">
                 <span>存酒数量：2</span>
                 <div class="count-box flex-h">
-                  <span :class="{'disabled': item.ipt===item.num}" @click="cutTakeWineNum(item)">-</span>
+                  <span
+                    :class="{ disabled: item.ipt === item.num }"
+                    @click="cutTakeWineNum(item)"
+                    >-</span
+                  >
                   <input class="wine-num" v-model="item.ipt" type="number" />
-                  <span :class="{'disabled': item.ipt===item.num}" @click="addTakeWineNum(item)">+</span>
+                  <span
+                    :class="{ disabled: item.ipt === item.num }"
+                    @click="addTakeWineNum(item)"
+                    >+</span
+                  >
                 </div>
               </div>
               <p class="price-box">剩余时间：20天</p>
@@ -76,11 +84,11 @@
 
 <script>
 import {
-  saveWine, 
+  saveWine,
   takeWine,
   historySaveWine,
   overdueWine
-} from '@/api/takeWine.js';
+} from "@/api/takeWine.js";
 export default {
   name: "TakeWine",
   data() {
@@ -115,17 +123,17 @@ export default {
   methods: {
     tabFn(index) {
       this.tabIndex = index;
-      if(index == 1) this.getTakeWineList();
-      if(index == 2) this.getHistorySaveWineList();
-      if(index == 3) this.getOverdueWineList();
+      if (index == 1) this.getTakeWineList();
+      if (index == 2) this.getHistorySaveWineList();
+      if (index == 3) this.getOverdueWineList();
     },
     scanTap() {
       wx.scanQRCode({
         needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
-        scanType: ["qrCode","barCode"], // 可以指定扫二维码还是一维码，默认二者都有
-        success: function (res) {
+        scanType: ["qrCode", "barCode"], // 可以指定扫二维码还是一维码，默认二者都有
+        success: function(res) {
           var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
-          
+
           saveWine({
             data: {
               id: result,
@@ -134,7 +142,7 @@ export default {
             },
             loading: true
           }).then(res => {
-            this.$toast('成功存酒!');
+            this.$toast("成功存酒!");
           });
         }
       });
@@ -145,44 +153,44 @@ export default {
       takeWine({
         // data: {uid: },
         loading: true
-      }).then(res => {
-        let list = res.data || []
-        this.list = list.reduce((newArr, currItem, currInx, arr) => {
-          currItem.ipt = 0;
-          newArr.push(currItem);
-          return newArr;
-        }, []);
-      }).catch(err=>{
-
-      });
+      })
+        .then(res => {
+          let list = res.data || [];
+          this.list = list.reduce((newArr, currItem, currInx, arr) => {
+            currItem.ipt = 0;
+            newArr.push(currItem);
+            return newArr;
+          }, []);
+        })
+        .catch(err => {});
     },
     cutTakeWineNum(item) {
-      if(item.ipt === item.num) return;
+      if (item.ipt === item.num) return;
       item.ipt--;
     },
     addTakeWineNum(item) {
-      if(item.ipt === item.num) return;
+      if (item.ipt === item.num) return;
       item.ipt++;
     },
     getHistorySaveWineList() {
       this.list = [];
       historySaveWine({
         loading: true
-      }).then(res => {
-        this.list = res.data || []
-      }).catch(err=>{
-        
-      });
+      })
+        .then(res => {
+          this.list = res.data || [];
+        })
+        .catch(err => {});
     },
     getOverdueWineList() {
       this.list = [];
       overdueWine({
         loading: true
-      }).then(res => {
-        this.list = res.data || []
-      }).catch(err=>{
-        
-      });
+      })
+        .then(res => {
+          this.list = res.data || [];
+        })
+        .catch(err => {});
     }
   }
 };
@@ -203,8 +211,8 @@ export default {
     border-bottom: 2px solid #070707;
     color: #fff;
     &.on {
-      color: #FF314F;
-      border-bottom: 2px solid #FF314F;
+      color: #ff314f;
+      border-bottom: 2px solid #ff314f;
     }
   }
 }
@@ -221,7 +229,7 @@ export default {
   text-align: center;
   font-size: 0.38rem;
   color: #fff;
-  background-color: #FF314F;
+  background-color: #ff314f;
   border-radius: 24px;
 }
 .take-box {
@@ -276,8 +284,8 @@ export default {
       text-overflow: ellipsis;
       overflow: hidden;
       span {
-        color: #FF314F;
-        &.disabled{
+        color: #ff314f;
+        &.disabled {
           color: #ddd;
         }
       }
@@ -307,7 +315,7 @@ export default {
     }
   }
   .take-btn-box {
-    background-color:#070707;
+    background-color: #070707;
     padding: 0.13rem 0.6rem;
     text-align: right;
     .take-btn {
@@ -317,7 +325,7 @@ export default {
       line-height: 0.6rem;
       text-align: center;
       border-radius: 20px;
-      background-color: #FF314F;
+      background-color: #ff314f;
       color: #fff;
     }
   }

@@ -11,7 +11,7 @@ module.exports = {
     assetsPublicPath: "/",
     proxyTable: {
       "/api": {
-        target: "http://jb.226tv.cn",
+        target: "https://jb.226tv.cn",
         changeOrigin: true,
         pathRewrite: {
           "^/api": "/api" //需要rewrite重写的,

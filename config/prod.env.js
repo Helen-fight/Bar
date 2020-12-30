@@ -1,5 +1,5 @@
 "use strict";
 module.exports = {
   NODE_ENV: '"production"',
-  API_ROOT: '"http://jb.226tv.cn"'
+  API_ROOT: '"https://jb.226tv.cn"'
 };
