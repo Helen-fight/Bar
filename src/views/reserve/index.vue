@@ -45,8 +45,20 @@ export default {
   mounted() {
     let now = new Date();
     console.log(now, "当前时间戳");
+    this.getReserve();
   },
-  methods: {}
+  methods: {
+    getReserve() {
+    this.request({
+      url: '',
+      data: {},
+      loading: true,
+      successFn: ({data}) => {
+
+      }
+    })
+    }
+  }
 };
 </script>
 

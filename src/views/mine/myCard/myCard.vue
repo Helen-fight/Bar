@@ -96,34 +96,14 @@
 </template>
 
 <script>
-import tabbar from "@/components/tabbar";
-import { MessageBox } from "mint-ui";
-import { Popup } from 'mint-ui';
+import { MessageBox, Popup } from "mint-ui";
+import {getMyCard} from '@/api/mine.js';
 export default {
   name: "MemberCard",
   data() {
     return {
-      showPopup: false,
-      inviteCode: '',
-      cardList: [
-        {
-          id: 1,
-          showDetail: false,
-          title: '黄金会员卡'
-        },{
-          id: 2,
-          showDetail: false,
-          title: '白金会员卡'
-        },{
-          id: 3,
-          showDetail: false,
-          title: '至尊会员卡'
-        }
-      ]
+      detail: {}
     };
-  },
-  components: {
-    tabbar
   },
   methods: {
     goto(path) {
@@ -132,6 +112,11 @@ export default {
         return false;
       }
       this.$router.push(path);
+    },
+    getCardDetail() {
+      getMyCard({}).then(res => {
+        this.detail = res.data ||{};
+      }).catch(err=>{});
     },
     recharge(item) {
       this.showPopup = true;

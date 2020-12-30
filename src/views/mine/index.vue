@@ -52,6 +52,9 @@ export default {
   components: {
     tabbar
   },
+  created(){
+    this.userinfo = JSON.parse(window.localStorage.getItem("userInfo"));
+  },
   methods: {
     goto(path) {
       if (path === "") {
