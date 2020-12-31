@@ -11,20 +11,19 @@ export default {
   data() {
     return {};
   },
-  created() {
-    let userInfo = window.localStorage.getItem("userInfo");
-    if (userInfo) {
-      // 没有用户信息的话跳转微信授权
-      authorize();
-    }
-  },
   mounted() {
     let query = this.$route.query;
+    this.getJssdkConfig(); // 获取jssdk配置
     if (query && query.code) {
       //  获取code调取后端登录接口获取用户信息
       this.login(query.code);
+      return false;
     }
-    this.getJssdkConfig();
+    let userInfo = window.localStorage.getItem("userInfo");
+    if (!userInfo) {
+      // 没有用户信息的话跳转微信授权
+      authorize();
+    }
   },
   methods: {
     getJssdkConfig() {
@@ -44,6 +43,9 @@ export default {
             nonceStr: data.noncestr, // 必填，生成签名的随机串
             signature: data.signature, // 必填，签名，见附录1
             jsApiList: ["scanQRCode", "openLocation"] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+          });
+          wx.ready(function() {
+            console.log("jssdk配置成功");
           });
           wx.error(re => {
             console.log(re, "jssdk配置失败");
