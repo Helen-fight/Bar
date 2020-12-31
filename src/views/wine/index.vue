@@ -86,7 +86,7 @@ export default {
       room: "C18"
     };
   },
-  created() {
+  mounted() {
     this.initScroll();
   },
   methods: {

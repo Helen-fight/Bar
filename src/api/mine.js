@@ -1,6 +1,22 @@
 import request from "@/assets/js/request";
 let r = request.request
 
+// 用户自动登录
+export function login(options) {
+    options.url = '/api/v1/user/getUserInfoByCode';
+    options.loading = options.loading === false? options.loading : true;
+    options.successFn = (res) => {
+        resolve(res);
+    };
+    options.failFn = (res) => {
+        reject(res);
+    };
+    options.errorFn = (res) => {
+        reject(res);
+    };
+
+    r(options);
+}
 // 会员卡列表
 export function getCard(options){
     return new Promise((resolve, reject) => {
