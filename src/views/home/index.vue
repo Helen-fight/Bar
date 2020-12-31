@@ -29,6 +29,7 @@
 
 <script>
 import tabbar from "@/components/tabbar";
+import wx from "weixin-js-sdk";
 export default {
   name: "Home",
   data() {

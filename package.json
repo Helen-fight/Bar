@@ -16,7 +16,8 @@
     "sass-loader": "^7.1.0",
     "vconsole": "^3.3.4",
     "vue": "^2.5.2",
-    "vue-router": "^3.0.1"
+    "vue-router": "^3.0.1",
+    "weixin-js-sdk": "^1.6.0"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",

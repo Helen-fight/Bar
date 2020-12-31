@@ -2,6 +2,7 @@ import axios from "axios";
 import qs from "qs";
 import { authorize } from "@/assets/js/authorize";
 import { Indicator, Toast } from "mint-ui";
+import { userInfoKey } from "@/assets/js/config";
 
 if (process.env.NODE_ENV === "production") {
   //设置生产环境域名，开发环境不需要域名
@@ -24,10 +25,10 @@ let request = function(options) {
   }
   if (!options.data) options.data = {};
   if (
-    window.localStorage.getItem("userInfo") &&
+    window.localStorage.getItem(userInfoKey) &&
     options.header["Content-Type"] != "multipart/form-data"
   ) {
-    let userinfo = JSON.parse(window.localStorage.getItem("userInfo"));
+    let userinfo = JSON.parse(window.localStorage.getItem(userInfoKey));
     options.data.uid = userinfo.userid;
   }
 
@@ -74,14 +75,14 @@ function requestOk(res, options) {
     }
     if (res.data.code === -1 || res.data.code === 1002) {
       // -1重新登录，1002token不存在或已过期；重新跳转授权登录
-      window.localStorage.removeItem("userInfo");
+      window.localStorage.removeItem(userInfoKey);
       Toast("登录过期，请重新登录");
       setTimeout(() => {
         authorize();
       }, 300);
     } else if (res.data.code === 1005) {
       // 1005账号被封
-      window.localStorage.removeItem("userInfo");
+      window.localStorage.removeItem(userInfoKey);
       Toast(res.data.msg);
     } else {
       Toast(res.data.msg);

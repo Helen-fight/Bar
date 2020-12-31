@@ -6,23 +6,37 @@
 
 <script>
 import { authorize } from "@/assets/js/authorize";
+import { userInfoKey } from "@/assets/js/config";
 export default {
   name: "App",
   data() {
-    return {};
+    return {
+      isLogin: false
+    };
   },
   mounted() {
-    let query = this.$route.query;
     this.getJssdkConfig(); // 获取jssdk配置
-    if (query && query.code) {
-      //  获取code调取后端登录接口获取用户信息
-      this.login(query.code);
-      return false;
-    }
-    let userInfo = window.localStorage.getItem("userInfo");
-    if (!userInfo) {
-      // 没有用户信息的话跳转微信授权
-      authorize();
+  },
+  watch: {
+    $route(to, from) {
+      if (!this.isLogin) {
+        console.log(this.isLogin, "iiii");
+        console.log(this.$route, "rrrr");
+        let query = this.$route.query;
+        if (query && query.code) {
+          //  获取code调取后端登录接口获取用户信息
+          this.login(query.code); // 获取jssdk配置
+          return;
+        }
+        let userInfo = window.localStorage.getItem(userInfoKey);
+        if (!userInfo) {
+          // 没有用户信息的话跳转微信授权
+          authorize();
+          return false;
+        } else {
+        }
+        this.isLogin = true;
+      }
     }
   },
   methods: {
@@ -63,6 +77,9 @@ export default {
         },
         successFn(res) {
           console.log(res, "用户数据");
+          this.isLogin = true;
+          console.log(this.isLogin, "llll");
+          window.localStorage.setItem(userInfoKey, JSON.stringify(res.data));
         }
       });
     }

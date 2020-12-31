@@ -8,6 +8,7 @@
 </template>
 
 <script>
+import wx from "weixin-js-sdk";
 export default {
   name: "Scan",
   data() {
