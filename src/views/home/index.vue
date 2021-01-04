@@ -29,6 +29,7 @@
 
 <script>
 import tabbar from "@/components/tabbar";
+import { userInfoKey } from "@/assets/js/config";
 import wx from "weixin-js-sdk";
 export default {
   name: "Home",
@@ -77,6 +78,15 @@ export default {
   components: {
     tabbar
   },
+  mounted() {
+    let that = this;
+    if (window.localStorage.getItem(userInfoKey)) {
+      let userInfo = JSON.parse(window.localStorage.getItem(userInfoKey));
+      if (userInfo.mobile === "") {
+        that.$router.push("/bind-phone");
+      }
+    }
+  },
   methods: {
     goto(path) {
       if (path === "/wine") {
@@ -115,11 +125,11 @@ export default {
     openLocation() {
       // 使用微信内置地图查看门店位置
       wx.openLocation({
-        latitude: 0, // 纬度，浮点数，范围为90 ~ -90
-        longitude: 0, // 经度，浮点数，范围为180 ~ -180。
-        name: "", // 位置名
-        address: "", // 地址详情说明
-        scale: 1, // 地图缩放级别,整形值,范围从1~28。默认为最大
+        latitude: 118.198303, // 纬度，浮点数，范围为90 ~ -90
+        longitude: 24.481622, // 经度，浮点数，范围为180 ~ -180。
+        name: "中航紫金广场B栋", // 位置名
+        address: "中航紫金广场B栋", // 地址详情说明
+        scale: 16, // 地图缩放级别,整形值,范围从1~28。默认为最大
         infoUrl: "" // 在查看位置界面底部显示的超链接,可点击跳转
       });
     }

@@ -24,12 +24,11 @@ let request = function(options) {
     }
   }
   if (!options.data) options.data = {};
-  if (
-    window.localStorage.getItem(userInfoKey) &&
-    options.header["Content-Type"] != "multipart/form-data"
-  ) {
-    let userinfo = JSON.parse(window.localStorage.getItem(userInfoKey));
-    options.data.uid = userinfo.userid;
+  let userInfo = JSON.parse(window.localStorage.getItem(userInfoKey));
+  if (userInfo && options.header["Content-Type"] != "multipart/form-data") {
+    // let userInfo = JSON.parse(window.localStorage.getItem(userInfoKey));
+    options.data.uid = userInfo.userid;
+    options.data.token = userInfo.token;
   }
 
   if (options.method.toLowerCase() == "get") {

@@ -11,6 +11,7 @@ import "./assets/js/rem.js";
 
 import MintUI from "mint-ui";
 import "mint-ui/lib/style.css";
+import "./assets/css/mintuiReset.scss";
 
 import request from "@/assets/js/request";
 

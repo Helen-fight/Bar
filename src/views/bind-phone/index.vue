@@ -30,6 +30,7 @@
 
 <script>
 import common from "@/assets/js/common";
+import { userInfoKey } from "@/assets/js/config";
 export default {
   name: "BindPhone",
   data() {
@@ -40,6 +41,7 @@ export default {
     };
   },
   mounted() {
+    this.$toast("您还未绑定手机号，请先绑定");
   },
   methods: {
     getCode() {
@@ -93,14 +95,19 @@ export default {
         return false;
       }
       this.request({
-        url: "",
+        url: "/api/v1/user/setMobile",
         data: {
           mobile: this.mobile,
-          code: this.code
+          code: this.code,
+          time: Math.floor(new Date().getTime() / 1000)
         },
         loading: true,
         successFn(res) {
           console.log(res, "绑定手机号");
+          let userInfo = JSON.parse(window.localStorage.getItem(userInfoKey));
+          userInfo.mobile = res.data.mobile;
+          window.localStorage.setItem(userInfoKey, JSON.stringify(userInfo));
+          this.$router.replace("/");
         }
       });
     }
@@ -130,11 +137,11 @@ export default {
       color: #fff;
     }
     .code-btn {
-      color:#FF314F;
+      color: #ff314f;
       padding-left: 0.32rem;
-      height: .4rem;
-      line-height: .4rem;
-      border-left: 1px solid #FE344B;
+      height: 0.4rem;
+      line-height: 0.4rem;
+      border-left: 1px solid #fe344b;
     }
   }
   .bind-btn {
@@ -143,7 +150,7 @@ export default {
     font-size: 0.34rem;
     text-align: center;
     color: #fff;
-    background-color: #FF314F;
+    background-color: #ff314f;
     border-radius: 22px;
     margin-top: 0.8rem;
   }

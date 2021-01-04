@@ -2,8 +2,8 @@
   <div>
     <div class="mine-wrap">
       <div class="photo-box flex-h flex-vc">
-        <img class="photo" src="" alt="" />
-        <span>樱桃小丸子</span>
+        <img class="photo" :src="userInfo.head_pic" alt="" />
+        <span>{{ userInfo.nickname }}</span>
       </div>
       <div class="menu flex-h flex-hsb">
         <div
@@ -54,14 +54,16 @@ export default {
           icon: "home-icon4",
           path: ""
         }
-      ]
+      ],
+      userInfo: {}
     };
   },
   components: {
     tabbar
   },
-  created() {
-    this.userinfo = JSON.parse(window.localStorage.getItem(userInfoKey));
+  mounted() {
+    if (window.localStorage.getItem(userInfoKey))
+      this.userInfo = JSON.parse(window.localStorage.getItem(userInfoKey));
   },
   methods: {
     goto(path) {
