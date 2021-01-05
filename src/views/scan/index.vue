@@ -23,15 +23,9 @@ export default {
         success: function(res) {
           var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
           console.log(result, "扫码结果");
-          that.request({
-            url: "",
-            data: {},
-            successFn(response) {
-              // 获取到房间号，保存到本地缓存,然后跳转点酒页面
-              window, localStorage.setItem("room", response.data.code);
-              that.$router.replace("/wine");
-            }
-          });
+          let tableNum = result.split("table=")[1];
+          window.localStorage.setItem("table", tableNum);
+          that.$router.push({ path: "/wine", replace: true });
         }
       });
     }

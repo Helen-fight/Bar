@@ -11,8 +11,8 @@
       <div class="consume-item-box" v-for="(item, index) in list" :key="index">
         <div class="consume-item flex-h flex-hsb flex-vc">
           <div>
-            <p>日期：2020.12.16</p>
-            <p>消费金额：1990元</p>
+            <p>日期：{{ item.add_time }}</p>
+            <p>消费金额：{{ item.sell_price }}元</p>
           </div>
           <div
             class="detail-btn flex-h flex-hc flex-vc"
@@ -48,27 +48,41 @@ export default {
   data() {
     return {
       list: [],
-      loading: true
+      pn: 1,
+      loading: true,
+      hasmore: true
     };
   },
   created() {
-    this.loadMore();
+    this.getdata();
   },
   methods: {
+    getdata() {
+      let that = this;
+      if (!this.hasmore) return;
+      this.request({
+        url: "/api/v1/product/order_list",
+        loading: true,
+        data: {
+          page: this.pn
+        },
+        successFn(res) {
+          console.log(res, "订单列表");
+          if (res.data.length != 0) {
+            res.data.forEach(item => {
+              item.show = false;
+            });
+            that.pn++;
+            that.list = that.list.concat(res.data);
+          } else {
+            that.$toast("已无更多数据");
+            that.hasmore = false;
+          }
+        }
+      });
+    },
     showDetail(index) {
       this.list[index].show = !this.list[index].show;
-    },
-    loadMore() {
-      this.loading = true;
-      this.$indicator.open();
-      setTimeout(() => {
-        let last = 1;
-        for (let i = 1; i <= 10; i++) {
-          this.list.push({ id: last + i, show: false });
-        }
-        this.loading = false;
-        this.$indicator.close();
-      }, 2500);
     }
   }
 };
@@ -92,17 +106,17 @@ export default {
     height: 0.6rem;
     line-height: 0.6rem;
     text-align: center;
-    border: 1px solid #FF314F;
+    border: 1px solid #ff314f;
     border-radius: 22px;
-    color: #FF314F;
-    .icon-forward{
+    color: #ff314f;
+    .icon-forward {
       width: 0.1rem;
       height: 0.18rem;
-      margin-left: .16rem;
+      margin-left: 0.16rem;
       margin-top: 2px;
       background: url(../../assets/img/forward_icon.png) no-repeat;
       background-size: 100%;
-      transition: rotate ease .5s;
+      transition: rotate ease 0.5s;
       &.show {
         transform: rotate(90deg);
       }
@@ -127,6 +141,6 @@ export default {
 .no-data {
   margin-top: 5rem;
   text-align: center;
-  color: #676f7f;
+  color: #fff;
 }
 </style>

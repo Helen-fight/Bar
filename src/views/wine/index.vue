@@ -3,7 +3,7 @@
   <div>
     <div class="room-box flex-h flex-hsb flex-vc">
       <p>
-        当前房间号：<span class="room">{{ room }}</span>
+        当前房间号：<span class="room">{{ tableNum }}</span>
       </p>
       <i class="room-icon" @click="backHome"></i>
     </div>
@@ -79,23 +79,28 @@ export default {
   name: "Wine",
   data() {
     return {
-      list: [1, 2, 3, 4, 5, 6, 7, 8],
+      list: [],
       menuIndex: 0,
       roomHeight: 0,
       listDom: [],
-      room: "C18"
+      tableNum: ""
     };
   },
   mounted() {
-    this.initScroll();
+    this.tableNum = window.localStorage.getItem("table");
+    this.getdata();
   },
   methods: {
     getdata() {
       //  获取酒水列表
+      let that = this;
       this.request({
         url: "/api/v1/product/index",
+        loading: true,
         successFn(res) {
           console.lo(res, "酒水列表");
+          if (res.data.length) that.list = res.data;
+          that.initScroll();
         }
       });
     },

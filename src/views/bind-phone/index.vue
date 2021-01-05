@@ -41,7 +41,8 @@ export default {
     };
   },
   mounted() {
-    this.$toast("您还未绑定手机号，请先绑定");
+    let userInfo = JSON.parse(window.localStorage.getItem(userInfoKey));
+    if (userInfo.mobile === "") this.$toast("您还未绑定手机号，请先绑定");
   },
   methods: {
     getCode() {
@@ -60,7 +61,7 @@ export default {
         data: { mobile: this.mobile },
         loading: true,
         successFn(res) {
-          that.$toast(res.msg);
+          that.$toast("验证码发送成功");
           let time = 60;
           that.codetext = "(" + time + "s)后可重发";
           let timer = setInterval(() => {
@@ -94,6 +95,7 @@ export default {
         this.$toast("请输入验证码");
         return false;
       }
+      let that = this;
       this.request({
         url: "/api/v1/user/setMobile",
         data: {
@@ -103,11 +105,13 @@ export default {
         },
         loading: true,
         successFn(res) {
-          console.log(res, "绑定手机号");
+          that.$toast("手机号绑定成功");
           let userInfo = JSON.parse(window.localStorage.getItem(userInfoKey));
           userInfo.mobile = res.data.mobile;
           window.localStorage.setItem(userInfoKey, JSON.stringify(userInfo));
-          this.$router.replace("/");
+          setTimeout(() => {
+            that.$router.push({ path: "/", replace: true });
+          }, 1500);
         }
       });
     }

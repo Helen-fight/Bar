@@ -91,8 +91,8 @@ export default {
     goto(path) {
       if (path === "/wine") {
         // 点酒的时候先判断本地是否有缓存房间号，没有的话跳到扫一扫界面
-        let room = window.localStorage.getItem("room");
-        if (!room) {
+        let tableNum = window.localStorage.getItem("table");
+        if (!tableNum) {
           this.$router.push("/scan");
           return;
         }
@@ -110,26 +110,20 @@ export default {
         success: function(res) {
           var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
           console.log(result, "扫码结果");
-          that.request({
-            url: "",
-            data: {},
-            successFn(response) {
-              // 获取到房间号，保存到本地缓存
-              that.$toast("扫码成功，赶紧去下单吧");
-              console.log(response, "获取房间号返回结果");
-            }
-          });
+          let tableNum = result.split("table=")[1];
+          window.localStorage.setItem("table", tableNum);
+          that.$router.push({ path: "/wine" });
         }
       });
     },
     openLocation() {
       // 使用微信内置地图查看门店位置
       wx.openLocation({
-        latitude: 118.198303, // 纬度，浮点数，范围为90 ~ -90
-        longitude: 24.481622, // 经度，浮点数，范围为180 ~ -180。
+        latitude: 24.481622, // 纬度，浮点数，范围为90 ~ -90
+        longitude: 118.198303, // 经度，浮点数，范围为180 ~ -180。
         name: "中航紫金广场B栋", // 位置名
         address: "中航紫金广场B栋", // 地址详情说明
-        scale: 16, // 地图缩放级别,整形值,范围从1~28。默认为最大
+        scale: 15, // 地图缩放级别,整形值,范围从1~28。默认为最大
         infoUrl: "" // 在查看位置界面底部显示的超链接,可点击跳转
       });
     }

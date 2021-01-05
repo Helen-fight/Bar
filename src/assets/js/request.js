@@ -74,13 +74,14 @@ function requestOk(res, options) {
     }
     if (res.data.code === -1 || res.data.code === 1002) {
       // -1重新登录，1002token不存在或已过期；重新跳转授权登录
-      window.localStorage.removeItem(userInfoKey);
+      window.localStorage.clear();
       Toast("登录过期，请重新登录");
       setTimeout(() => {
         authorize();
       }, 300);
     } else if (res.data.code === 1005) {
       // 1005账号被封
+      window.localStorage.clear();
       window.localStorage.removeItem(userInfoKey);
       Toast(res.data.msg);
     } else {
