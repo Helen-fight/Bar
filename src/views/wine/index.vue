@@ -10,12 +10,12 @@
     <div class="menu-box">
       <div
         class="menu-item"
-        v-for="(item, index) in list"
+        v-for="(item, index) in menu"
         :key="index"
         :class="index === menuIndex ? 'on' : ''"
         @click="goTarget(index)"
       >
-        威士忌系列{{ index }}
+        {{ item }}
       </div>
     </div>
     <div class="wine-list">
@@ -26,35 +26,50 @@
         :id="'page-' + (index + 1)"
       >
         <div class="wine-title-box flex-h flex-vc">
-          <span class="wine-title">啤酒系列{{ index }}</span>
+          <span class="wine-title">{{ item.name }}</span>
         </div>
         <div
           class="wine flex-h flex-hsb"
-          v-for="(subitem, idx) in [1, 1, 1]"
+          v-for="(subitem, idx) in item.data"
           :key="idx"
-          :class="idx === 0 ? 'sell-null' : ''"
+          :class="subitem.num === '0' ? 'sell-null' : ''"
         >
           <div class="wine-img-box">
-            <img class="wine-img" src="" alt="" />
-            <div class="wine-no" v-if="idx === 0">
+            <img class="wine-img" :src="subitem.img" alt="" />
+            <div class="wine-no" v-if="subitem.num === '0'">
               <img src="../../assets/img/wine/wine_null.png" alt="" />
             </div>
           </div>
           <div class="wine-content">
             <p class="wine-name">
-              Heineken/喜力啤酒{{ idx }}<span> (支)</span>
+              {{ subitem.name }}<span> ({{ subitem.unit }})</span>
             </p>
             <div class="flex-h flex-hsb flex-vc">
               <span class="huiyuan">会员价</span>
-              <div class="count-box flex-h">
-                <span>-</span>
-                <input class="wine-num" type="number" />
-                <span>+</span>
+              <div
+                class="count-box flex-h"
+                v-if="subitem.buyNum > 0 || subitem.buyNum === ''"
+              >
+                <span @click="addNum(subitem, 'reduce')">-</span>
+                <input
+                  v-model="subitem.buyNum"
+                  class="wine-num"
+                  type="number"
+                  pattern="[0-9]*"
+                />
+                <span @click="addNum(subitem, 'add')">+</span>
               </div>
             </div>
             <div class="price-box flex-h flex-hsb flex-vc">
-              <p><span>￥36</span><span class="origin-price">￥50.00</span></p>
-              <div class="add-btn"></div>
+              <p>
+                <span>￥{{ subitem.sell_price }}</span
+                ><span class="origin-price">￥{{ subitem.oriprice }}</span>
+              </p>
+              <div
+                class="add-btn"
+                v-if="subitem.buyNum === 0"
+                @click="addNum(subitem, 'add')"
+              ></div>
             </div>
           </div>
         </div>
@@ -65,8 +80,10 @@
       <div class="flex-h flex-vc">
         <span>合计：</span>
         <div>
-          <p class="price">￥8100</p>
-          <p class="origin-text">原价<span>￥9600</span></p>
+          <p class="price">￥{{ total[0] }}</p>
+          <p class="origin-text">
+            原价<span>￥{{ total[1] }}</span>
+          </p>
         </div>
       </div>
       <div class="account-btn" @click="settleFn">去结算</div>
@@ -79,12 +96,28 @@ export default {
   name: "Wine",
   data() {
     return {
+      menu: [],
       list: [],
       menuIndex: 0,
       roomHeight: 0,
       listDom: [],
-      tableNum: ""
+      tableNum: "",
+      lastNum: 0 // 保存商品上一个购买数量
     };
+  },
+  computed: {
+    total() {
+      let arr = [0, 0];
+      for (var i = 0, len = this.list.length; i < len; i++) {
+        if (this.list[i].data.length > 0) {
+          this.list[i].data.forEach(item => {
+            arr[0] = arr[0] + Number(item.sell_price) * item.buyNum;
+            arr[1] = arr[1] + Number(item.oriprice) * item.buyNum;
+          });
+        }
+      }
+      return arr;
+    }
   },
   mounted() {
     this.tableNum = window.localStorage.getItem("table");
@@ -98,11 +131,28 @@ export default {
         url: "/api/v1/product/index",
         loading: true,
         successFn(res) {
-          console.lo(res, "酒水列表");
-          if (res.data.length) that.list = res.data;
+          console.log(res, "酒水列表");
+          if (res.data.length) {
+            res.data.forEach(item => {
+              if (item.data.length) {
+                item.data.forEach(subitem => {
+                  subitem.buyNum = 0;
+                });
+              }
+              that.menu.push(item.name);
+            });
+            that.list = res.data;
+          }
           that.initScroll();
         }
       });
+    },
+    addNum(item, type) {
+      if (type === "add") {
+        item.buyNum++;
+      } else if (type === "reduce") {
+        item.buyNum--;
+      }
     },
     initScroll() {
       this.roomHeight =
@@ -151,6 +201,18 @@ export default {
       } */
     },
     settleFn() {
+      if (this.total[0] === 0) {
+        return;
+      }
+      let arr = [];
+      this.list.forEach(item => {
+        if (item.buyNum !== 0) arr.push(item);
+      });
+      let obj = {
+        data: arr,
+        total: this.total
+      };
+      window.sessionStorage.setItem("orderData", JSON.stringify(obj));
       this.$router.push("/settlement");
     },
     backHome() {

@@ -2,7 +2,9 @@
   <!--酒水结算-->
   <div>
     <div class="room-box flex-h flex-hsb flex-vc">
-      <p>当前房间号：<span class="room">C18</span></p>
+      <p>
+        当前房间号：<span class="room">{{ table }}</span>
+      </p>
       <i class="room-icon" @click="backHome"></i>
     </div>
     <div class="wine-list">
@@ -11,21 +13,29 @@
         v-for="(item, index) in list"
         :key="index"
       >
-        <img class="wine-img" src="" alt="" />
+        <img class="wine-img" :src="item.img" alt="" />
         <div class="wine-content">
           <p class="wine-name">
-            Heineken/喜力啤酒{{ index + 1 }}<span> (支)</span>
+            {{ item.name }}<span> ({{ item.unit }})</span>
           </p>
           <div class="flex-h flex-hsb flex-vc">
             <span class="huiyuan">会员价</span>
             <div class="count-box flex-h">
               <span>-</span>
-              <input class="wine-num" :value="index + 1" type="number" />
+              <input
+                class="wine-num"
+                v-model="item.buyNum"
+                type="number"
+                pattern="[0-9]*"
+              />
               <span>+</span>
             </div>
           </div>
           <div class="price-box">
-            <p><span>￥36</span><span class="origin-price">￥50.00</span></p>
+            <p>
+              <span>￥{{ item.sell_price }}</span
+              ><span class="origin-price">￥{{ item.oriprice }}</span>
+            </p>
           </div>
         </div>
       </div>
@@ -34,8 +44,10 @@
       <div class="flex-h flex-vc">
         <span>合计：</span>
         <div>
-          <p class="price">￥8100</p>
-          <p class="origin-text">原价<span>￥9600</span></p>
+          <p class="price">￥{{ total[0] }}</p>
+          <p class="origin-text">
+            原价<span>￥{{ total[1] }}</span>
+          </p>
         </div>
       </div>
       <div class="account-btn" @click="settleFn">去结算</div>
@@ -48,12 +60,23 @@ export default {
   name: "Settlement",
   data() {
     return {
-      list: [1, 2, 3, 4, 5, 6, 7, 8]
+      table: "",
+      list: [],
+      total: []
     };
   },
+  mounted() {
+    if (window.sessionStorage.getItem("orderData")) {
+      let orderData = JSON.parse(window.sessionStorage.getItem("orderData"));
+      this.list = orderData.data;
+      this.total = orderData.total;
+    }
+    console.log(this.list, "lll");
+    this.table = window.localStorage.getItem("table");
+  },
   methods: {
-    backHome(){
-      this.$router.replace({path: "/"})
+    backHome() {
+      this.$router.replace({ path: "/" });
     }
   }
 };
@@ -72,7 +95,7 @@ export default {
   z-index: 3;
   color: #fff;
   .room {
-    color: #FF314F;
+    color: #ff314f;
   }
   .room-icon {
     width: 0.42rem;
@@ -105,7 +128,7 @@ export default {
       text-overflow: ellipsis;
       overflow: hidden;
       span {
-        color:#FF314F;
+        color: #ff314f;
       }
     }
     .huiyuan {
@@ -115,7 +138,7 @@ export default {
       text-align: center;
       font-size: 0.22rem;
       color: #fff;
-      background-color: #FF314F;
+      background-color: #ff314f;
     }
     .count-box {
       border: 1px solid #ddd;
@@ -133,12 +156,12 @@ export default {
       span {
         width: 0.45rem;
         text-align: center;
-        color:#FF314F;
+        color: #ff314f;
       }
     }
     .price-box {
       margin-top: 0.12rem;
-      color: #FF314F;
+      color: #ff314f;
     }
     .origin-price {
       margin-left: 5px;
@@ -160,7 +183,7 @@ export default {
   box-shadow: 0px -1px 0px 0px rgba(0, 0, 0, 0.15);
   .price {
     font-size: 0.34rem;
-    color: #FF314F;
+    color: #ff314f;
     margin-bottom: 0.12rem;
   }
   .origin-text {
@@ -176,7 +199,7 @@ export default {
     text-align: center;
     font-size: 0.34rem;
     color: #fff;
-    background-color:#FF314F;
+    background-color: #ff314f;
     border-radius: 22px;
   }
 }

@@ -195,9 +195,7 @@ export default {
     margin-bottom: 0.45rem;
   }
   .add-btn {
-    height: 0.6rem;
-    line-height: 0.6rem;
-    padding: 0 0.5rem;
+    padding: 0.2rem 0.5rem;
     margin-left: 0.5rem;
     color: #fff;
     border-radius: 25px;

@@ -75,8 +75,10 @@ export default {
             that.pn++;
             that.list = that.list.concat(res.data);
           } else {
-            that.$toast("已无更多数据");
-            that.hasmore = false;
+            if (that.pn !== 1) {
+              that.$toast("已无更多数据");
+              that.hasmore = false;
+            }
           }
         }
       });
