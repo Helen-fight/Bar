@@ -196,9 +196,9 @@ export default {
     }
     .wine-content {
       width: 5.1rem;
-      height: 20px;
     }
     .wine-name {
+      padding-top: 2px;
       margin-bottom: 0.2rem;
       white-space: nowrap;
       text-overflow: ellipsis;
@@ -223,6 +223,7 @@ export default {
       font-size: 0.22rem;
       input {
         width: 0.6rem;
+        padding: 0.07rem 0;
         text-align: center;
         border-right: 1px solid #ddd;
         border-left: 1px solid #ddd;

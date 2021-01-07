@@ -44,7 +44,7 @@
             <p class="wine-name">
               {{ subitem.name }}<span> ({{ subitem.unit }})</span>
             </p>
-            <div class="flex-h flex-hsb flex-vc">
+            <div class="hy-box flex-h flex-hsb flex-vc">
               <span class="huiyuan">会员价</span>
               <div
                 class="count-box flex-h"
@@ -255,9 +255,10 @@ export default {
     padding: 0.18rem;
     border-radius: 0.1rem;
     color: #fff;
-    margin-bottom: 0.18rem;
+    margin-bottom: 0.1rem;
   }
   .wine-title-box {
+    padding-top: 2px;
     font-size: 0.24rem;
     margin-bottom: 0.22rem;
     .wine-title {
@@ -299,13 +300,17 @@ export default {
       width: 3.2rem;
     }
     .wine-name {
-      margin-bottom: 0.2rem;
+      margin-bottom: 0.12rem;
       white-space: nowrap;
       text-overflow: ellipsis;
       overflow: hidden;
       span {
         color: #ff314f;
       }
+    }
+    .hy-box {
+      height: 0.52rem;
+      margin-bottom: 0.12rem;
     }
     .huiyuan {
       width: 1rem;
@@ -324,6 +329,7 @@ export default {
       border-radius: 2px;
       input {
         width: 0.6rem;
+        padding: 0.07rem 0;
         text-align: center;
         border-right: 1px solid #ddd;
         border-left: 1px solid #ddd;
@@ -337,8 +343,8 @@ export default {
       }
     }
     .price-box {
-      margin-top: 0.16rem;
       color: #ff314f;
+      height: 0.28rem;
     }
     .origin-price {
       margin-left: 5px;
@@ -410,7 +416,7 @@ export default {
   bottom: 0;
   padding: 0 0.45rem;
   height: 1.2rem;
-  background: #121212;
+  background: #070707;
   color: #fff;
   box-shadow: 0px -1px 0px 0px rgba(0, 0, 0, 0.15);
   .price {
