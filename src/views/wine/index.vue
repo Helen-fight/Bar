@@ -148,6 +148,7 @@ export default {
       });
     },
     addNum(item, type) {
+      if (Number(item.num) === 0) return; // 卖完了
       if (type === "add") {
         item.buyNum++;
       } else if (type === "reduce") {
@@ -202,17 +203,18 @@ export default {
     },
     settleFn() {
       if (this.total[0] === 0) {
+        this.$toast("请先点酒下单");
         return;
       }
       let arr = [];
-      this.list.forEach(item => {
-        if (item.buyNum !== 0) arr.push(item);
-      });
-      let obj = {
-        data: arr,
-        total: this.total
-      };
-      window.sessionStorage.setItem("orderData", JSON.stringify(obj));
+      for (let i = 0, len = this.list.length; i < len; i++) {
+        if (this.list[i].data.length > 0) {
+          this.list[i].data.forEach(item => {
+            if (item.buyNum !== 0) arr.push(item);
+          });
+        }
+      }
+      window.sessionStorage.setItem("orderData", JSON.stringify(arr));
       this.$router.push("/settlement");
     },
     backHome() {

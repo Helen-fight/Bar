@@ -56,7 +56,7 @@ export default {
             timestamp: data.timestamp, // 必填，生成签名的时间戳
             nonceStr: data.noncestr, // 必填，生成签名的随机串
             signature: data.signature, // 必填，签名，见附录1
-            jsApiList: ["scanQRCode", "openLocation"] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+            jsApiList: ["scanQRCode", "openLocation", "chooseWXPay"] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
           });
           wx.error(re => {
             console.log(re, "jssdk配置失败");

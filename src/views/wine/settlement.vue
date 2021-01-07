@@ -21,14 +21,14 @@
           <div class="flex-h flex-hsb flex-vc">
             <span class="huiyuan">会员价</span>
             <div class="count-box flex-h">
-              <span>-</span>
+              <span @click="addNum(item, 'reduce')">-</span>
               <input
                 class="wine-num"
                 v-model="item.buyNum"
                 type="number"
                 pattern="[0-9]*"
               />
-              <span>+</span>
+              <span @click="addNum(item, 'add')">+</span>
             </div>
           </div>
           <div class="price-box">
@@ -50,7 +50,7 @@
           </p>
         </div>
       </div>
-      <div class="account-btn" @click="settleFn">去结算</div>
+      <div class="account-btn" @click="settleEvent">下单</div>
     </div>
   </div>
 </template>
@@ -61,23 +61,99 @@ export default {
   data() {
     return {
       table: "",
-      list: [],
-      total: []
+      list: []
     };
+  },
+  computed: {
+    total() {
+      let arr = [0, 0];
+      this.list.forEach(item => {
+        arr[0] = arr[0] + Number(item.sell_price) * item.buyNum;
+        arr[1] = arr[1] + Number(item.oriprice) * item.buyNum;
+      });
+      return arr;
+    }
   },
   mounted() {
     if (window.sessionStorage.getItem("orderData")) {
       let orderData = JSON.parse(window.sessionStorage.getItem("orderData"));
-      this.list = orderData.data;
-      this.total = orderData.total;
+      this.list = orderData;
     }
-    console.log(this.list, "lll");
     this.table = window.localStorage.getItem("table");
   },
   methods: {
     backHome() {
       this.$router.replace({ path: "/" });
+    },
+    addNum(item, type) {
+      if (type === "add") {
+        item.buyNum++;
+      } else if (type === "reduce") {
+        if (item.buyNum > 0) item.buyNum--;
+      }
+    },
+    settleEvent() {
+      let that = this;
+      if (this.total[0] === 0) {
+        this.$toast("清闲点酒再下单");
+        return;
+      }
+      this.$messagebox
+        .confirm("确定下单吗", "下单提示")
+        .then(action => {
+          if (action === "confirm") {
+            let arr = [];
+            that.list.forEach(item => {
+              if (item.buyNum !== 0) {
+                let obj = {
+                  id: item.id,
+                  num: item.buyNum
+                };
+                arr.push(obj);
+              }
+            });
+            that.request({
+              url: "/api/v1/product/buy",
+              data: {
+                detail: arr,
+                table_num: this.table
+              },
+              loading: true,
+              successFn(res) {
+                console.log(res, "下单成功");
+                that.request({
+                  url: "/api/v1/pay/pay",
+                  data: {
+                    orderid: res.data.orderid,
+                    type: 2
+                  },
+                  successFn(response) {
+                    console.log(response, "发起微信支付数据");
+                    wx.chooseWXPay({
+                      timestamp: 0, // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
+                      nonceStr: "", // 支付签名随机串，不长于 32 位
+                      package: "", // 统一支付接口返回的prepay_id参数值，提交格式如：prepay_id=\*\*\*）
+                      signType: "", // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
+                      paySign: "", // 支付签名
+                      success: function(res2) {
+                        // 支付成功后的回调函数
+                        console.log(res2, "微信支付成功回调");
+                      }
+                    });
+                  }
+                });
+              }
+            });
+          }
+        })
+        .catch(() => {});
     }
+  },
+  beforeRouteLeave(to, from, next) {
+    if (to.path !== "/consume-history") {
+      window.sessionStorage.setItem("orderData", JSON.stringify(this.list));
+    }
+    next();
   }
 };
 </script>
