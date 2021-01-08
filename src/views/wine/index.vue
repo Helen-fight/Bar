@@ -47,7 +47,7 @@
             <div class="hy-box flex-h flex-hsb flex-vc">
               <span class="huiyuan">会员价</span>
               <div
-                class="count-box flex-h"
+                class="count-box flex-h flex-vc"
                 v-if="subitem.buyNum > 0 || subitem.buyNum === ''"
               >
                 <span @click="addNum(subitem, 'reduce')">-</span>
@@ -268,7 +268,7 @@ export default {
     }
   }
   .wine {
-    padding: 0.28rem 0;
+    padding: 0.22rem 0;
     border-bottom: 1px solid#070707;
     .wine-img-box {
       position: relative;
@@ -300,6 +300,9 @@ export default {
       width: 3.2rem;
     }
     .wine-name {
+      height: 0.32rem;
+      margin-top: 0.08rem;
+      line-height: 0.32rem;
       margin-bottom: 0.12rem;
       white-space: nowrap;
       text-overflow: ellipsis;
@@ -309,7 +312,7 @@ export default {
       }
     }
     .hy-box {
-      height: 0.52rem;
+      height: 0.42rem;
       margin-bottom: 0.12rem;
     }
     .huiyuan {
@@ -323,21 +326,21 @@ export default {
     }
     .count-box {
       border: 1px solid #ddd;
-      height: 0.36rem;
-      line-height: 0.36rem;
       font-size: 0.22rem;
       border-radius: 2px;
       input {
         width: 0.6rem;
-        padding: 0.07rem 0;
         text-align: center;
+        height: 0.42rem;
+        line-height: 0.42rem;
+        vertical-align: middle;
         border-right: 1px solid #ddd;
         border-left: 1px solid #ddd;
         background-color: #121212;
         color: #fff;
       }
       span {
-        width: 0.36rem;
+        width: 0.4rem;
         text-align: center;
         color: #ff314f;
       }

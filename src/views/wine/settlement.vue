@@ -20,7 +20,7 @@
           </p>
           <div class="flex-h flex-hsb flex-vc">
             <span class="huiyuan">会员价</span>
-            <div class="count-box flex-h">
+            <div class="count-box flex-h flex-vc">
               <span @click="addNum(item, 'reduce')">-</span>
               <input
                 class="wine-num"
@@ -95,7 +95,7 @@ export default {
     settleEvent() {
       let that = this;
       if (this.total[0] === 0) {
-        this.$toast("清闲点酒再下单");
+        this.$toast("清先点酒再下单");
         return;
       }
       this.$messagebox
@@ -125,16 +125,17 @@ export default {
                   url: "/api/v1/pay/pay",
                   data: {
                     orderid: res.data.orderid,
-                    type: 2
+                    type: 2 // 1会员，2商品
                   },
                   successFn(response) {
                     console.log(response, "发起微信支付数据");
+                    let pay = response.data;
                     wx.chooseWXPay({
-                      timestamp: 0, // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
-                      nonceStr: "", // 支付签名随机串，不长于 32 位
-                      package: "", // 统一支付接口返回的prepay_id参数值，提交格式如：prepay_id=\*\*\*）
-                      signType: "", // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
-                      paySign: "", // 支付签名
+                      timestamp: pay.timestamp, // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
+                      nonceStr: pay.noncestr, // 支付签名随机串，不长于 32 位
+                      package: pay.package, // 统一支付接口返回的prepay_id参数值，提交格式如：prepay_id=\*\*\*）
+                      signType: "SHA1", // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
+                      paySign: pay.sign, // 支付签名
                       success: function(res2) {
                         // 支付成功后的回调函数
                         console.log(res2, "微信支付成功回调");
@@ -198,8 +199,8 @@ export default {
       width: 5.1rem;
     }
     .wine-name {
-      padding-top: 2px;
-      margin-bottom: 0.2rem;
+      padding-top: 4px;
+      margin-bottom: 0.12rem;
       white-space: nowrap;
       text-overflow: ellipsis;
       overflow: hidden;
@@ -218,12 +219,13 @@ export default {
     }
     .count-box {
       border: 1px solid #ddd;
-      height: 0.45rem;
-      line-height: 0.45rem;
+      height: 0.4rem;
       font-size: 0.22rem;
+      border-radius: 2px;
       input {
         width: 0.6rem;
-        padding: 0.07rem 0;
+        height: 0.4rem;
+        line-height: 0.4rem;
         text-align: center;
         border-right: 1px solid #ddd;
         border-left: 1px solid #ddd;

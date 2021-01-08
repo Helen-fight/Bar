@@ -92,12 +92,12 @@ export default {
 
 <style lang="scss" scoped>
 .consume-list {
-  margin: 0.28rem 0.3rem 0;
+  margin: 0.28rem 0.2rem 0;
   .consume-item-box {
     margin-bottom: 0.2rem;
   }
   .consume-item {
-    padding: 0.36rem 0.4rem;
+    padding: 0.36rem 0.12rem;
     line-height: 0.52rem;
     margin-bottom: 2px;
     background-color: #070707;
