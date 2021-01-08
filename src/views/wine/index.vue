@@ -131,12 +131,18 @@ export default {
         url: "/api/v1/product/index",
         loading: true,
         successFn(res) {
-          console.log(res, "酒水列表");
           if (res.data.length) {
+            let orderData = window.sessionStorage.getItem("orderData")
+              ? JSON.parse(window.sessionStorage.getItem("orderData"))
+              : null;
             res.data.forEach(item => {
               if (item.data.length) {
                 item.data.forEach(subitem => {
-                  subitem.buyNum = 0;
+                  if (orderData && orderData.length) {
+                    that.setBuynum(orderData, subitem);
+                  } else {
+                    subitem.buyNum = 0;
+                  }
                 });
               }
               that.menu.push(item.name);
@@ -146,6 +152,17 @@ export default {
           that.initScroll();
         }
       });
+    },
+    setBuynum(data, item) {
+      let count = 0;
+      for (let i = 0, len = data.length; i < len; i++) {
+        if (data[i].id === item.id) {
+          item.buyNum = data[i].buyNum;
+          break;
+        }
+        count++;
+      }
+      if (count === data.length) item.buyNum = 0;
     },
     addNum(item, type) {
       if (Number(item.num) === 0) return; // 卖完了
@@ -206,6 +223,11 @@ export default {
         this.$toast("请先点酒下单");
         return;
       }
+      let arr = this.getBuyWine();
+      window.sessionStorage.setItem("orderData", JSON.stringify(arr));
+      this.$router.push("/settlement");
+    },
+    getBuyWine() {
       let arr = [];
       for (let i = 0, len = this.list.length; i < len; i++) {
         if (this.list[i].data.length > 0) {
@@ -214,12 +236,20 @@ export default {
           });
         }
       }
-      window.sessionStorage.setItem("orderData", JSON.stringify(arr));
-      this.$router.push("/settlement");
+      return arr;
     },
     backHome() {
       this.$router.replace({ path: "/" });
     }
+  },
+  beforeRouteLeave(to, from, next) {
+    // 把买的数量不为0的添加到缓存
+    if (to.path !== "/settlement") {
+      let arr = this.getBuyWine();
+      if (arr.length > 0)
+        window.sessionStorage.setItem("orderData", JSON.stringify(arr));
+    }
+    next();
   },
   beforeDestroy() {
     document.removeEventListener("scroll", this.onScroll);

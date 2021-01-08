@@ -3,7 +3,7 @@
   <div>
     <div
       class="consume-list"
-      v-infinite-scroll="loadMore"
+      v-infinite-scroll="getdata"
       infinite-scroll-disabled="loading"
       infinite-scroll-distance="10"
       v-if="list.length > 0"
@@ -11,7 +11,7 @@
       <div class="consume-item-box" v-for="(item, index) in list" :key="index">
         <div class="consume-item flex-h flex-hsb flex-vc">
           <div>
-            <p>日期：{{ item.add_time }}</p>
+            <p>日期：{{ item.addtime }}</p>
             <p>消费金额：{{ item.sell_price }}元</p>
           </div>
           <div
@@ -23,17 +23,13 @@
           </div>
         </div>
         <div class="detail-box" :class="item.show ? 'show' : ''">
-          <div class="beer flex-h flex-hsb">
-            <span>啤酒3瓶</span>
-            <span>180元</span>
-          </div>
-          <div class="beer flex-h flex-hsb">
-            <span>红酒5瓶</span>
-            <span>200元</span>
-          </div>
-          <div class="beer flex-h flex-hsb">
-            <span>威士忌6瓶</span>
-            <span>800元</span>
+          <div
+            class="beer flex-h flex-hsb"
+            v-for="subitem in item.detail"
+            :key="subitem.id"
+          >
+            <span>{{ subitem.name + subitem.num + subitem.unit }}</span>
+            <span>{{ subitem.price }}元</span>
           </div>
         </div>
       </div>
@@ -47,7 +43,20 @@ export default {
   name: "ConsumeHistory",
   data() {
     return {
-      list: [],
+      list: [
+        { sell_price: 123, addtime: 123456 },
+        { sell_price: 123, addtime: 123456 },
+        { sell_price: 123, addtime: 123456 },
+        { sell_price: 123, addtime: 123456 },
+        { sell_price: 123, addtime: 123456 },
+        { sell_price: 123, addtime: 123456 },
+        { sell_price: 123, addtime: 123456 },
+        { sell_price: 123, addtime: 123456 },
+        { sell_price: 123, addtime: 123456 },
+        { sell_price: 123, addtime: 123456 },
+        { sell_price: 123, addtime: 123456 },
+        { sell_price: 123, addtime: 123456 }
+      ],
       pn: 1,
       loading: true,
       hasmore: true
@@ -58,6 +67,7 @@ export default {
   },
   methods: {
     getdata() {
+      console.log(this.pn, "12313123");
       let that = this;
       if (!this.hasmore) return;
       this.request({
@@ -67,10 +77,10 @@ export default {
           page: this.pn
         },
         successFn(res) {
-          console.log(res, "订单列表");
           if (res.data.length != 0) {
             res.data.forEach(item => {
               item.show = false;
+              item.detail = [];
             });
             that.pn++;
             that.list = that.list.concat(res.data);
@@ -84,7 +94,22 @@ export default {
       });
     },
     showDetail(index) {
-      this.list[index].show = !this.list[index].show;
+      if (this.list[index].detail.length > 0) {
+        this.list[index].show = !this.list[index].show;
+        return;
+      }
+      let that = this;
+      this.request({
+        url: "/api/v1/product/order_info",
+        data: {
+          id: this.list[index].id
+        },
+        loading: true,
+        successFn(res) {
+          that.list[index].detail = res.data;
+          that.list[index].show = true;
+        }
+      });
     }
   }
 };
