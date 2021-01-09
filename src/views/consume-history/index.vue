@@ -5,6 +5,7 @@
     <div
       class="consume-list"
       v-infinite-scroll="getdata"
+      infinite-scroll-immediate-check="false"
       infinite-scroll-disabled="loading"
       infinite-scroll-distance="5"
       v-if="list.length > 0"
@@ -111,10 +112,14 @@ export default {
 <style lang="scss" scoped>
 .consume-list {
   margin: 40px 0.2rem 0;
+  /* height: calc(100vh - 40px);
+  overflow: hidden;
+  overflow-y: auto; */
   .consume-item-box {
     margin-bottom: 0.2rem;
   }
   .consume-item {
+    /* height: 50vh; */
     padding: 0.36rem 0.12rem;
     line-height: 0.52rem;
     margin-bottom: 2px;
