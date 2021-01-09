@@ -1,6 +1,7 @@
 <template>
   <!--扫码-->
   <div>
+    <Header />
     <div class="banner"></div>
     <p class="scan-text">找到房号（台号）二维码【扫一扫】自助下单</p>
     <div class="scan-btn" @click="scanFn">扫一扫</div>
@@ -9,10 +10,14 @@
 
 <script>
 import wx from "weixin-js-sdk";
+import Header from "@/components/header";
 export default {
   name: "Scan",
   data() {
     return {};
+  },
+  components: {
+    Header
   },
   methods: {
     scanFn() {
@@ -41,7 +46,7 @@ export default {
 .banner {
   height: 3rem;
   width: 3rem;
-  margin: 1.3rem auto;
+  margin: 1.7rem auto;
   background: url(../../assets/img/scan_bg.png) no-repeat;
   background-size: 100%;
 }

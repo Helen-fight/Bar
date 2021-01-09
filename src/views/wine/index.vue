@@ -1,12 +1,7 @@
 <template>
   <!--在线酒水-->
   <div>
-    <div class="room-box flex-h flex-hsb flex-vc">
-      <p>
-        当前房间号：<span class="room">{{ tableNum }}</span>
-      </p>
-      <i class="room-icon" @click="backHome"></i>
-    </div>
+    <Top :table="tableNum" />
     <div class="menu-box">
       <div
         class="menu-item"
@@ -92,6 +87,7 @@
 </template>
 
 <script>
+import Top from "./top";
 export default {
   name: "Wine",
   data() {
@@ -104,6 +100,9 @@ export default {
       tableNum: "",
       lastNum: 0 // 保存商品上一个购买数量
     };
+  },
+  components: {
+    Top
   },
   computed: {
     total() {
@@ -237,9 +236,6 @@ export default {
         }
       }
       return arr;
-    },
-    backHome() {
-      this.$router.replace({ path: "/" });
     }
   },
   beforeRouteLeave(to, from, next) {
@@ -258,27 +254,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.room-box {
-  position: fixed;
-  left: 0;
-  top: 0;
-  right: 0;
-  padding: 0 0.45rem;
-  height: 1rem;
-  background-color: #070707;
-  font-size: 0.32rem;
-  z-index: 3;
-  color: #fff;
-  .room {
-    color: #ff314f;
-  }
-  .room-icon {
-    width: 0.42rem;
-    height: 0.42rem;
-    background: url(../../assets/img/wine/icon_back_home.png) no-repeat;
-    background-size: 100%;
-  }
-}
 .wine-list {
   margin: 1.15rem 0.2rem 0 2.2rem;
   .wine-item {

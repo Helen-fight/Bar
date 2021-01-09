@@ -83,7 +83,7 @@ export default new Router({
       name: "Settlement",
       component: () => import("@/views/wine/settlement"),
       meta: {
-        title: "结算"
+        title: "在线下单"
       }
     },
     {
@@ -99,7 +99,7 @@ export default new Router({
       name: "ConsumeHistory",
       component: () => import("@/views/consume-history"),
       meta: {
-        title: "消费历史订单"
+        title: "我的订单"
       }
     },
     {

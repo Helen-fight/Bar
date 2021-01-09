@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Header />
     <div class="tab flex-h flex-hsb">
       <div
         class="tab-item"
@@ -40,7 +41,13 @@
                     @click="cutTakeWineNum(item)"
                     >-</span
                   >
-                  <input class="wine-num" v-model="item.ipt" type="number" />
+                  <input
+                    class="wine-num"
+                    v-model="item.ipt"
+                    disabled
+                    type="number"
+                    pattern="[0-9]*"
+                  />
                   <span
                     :class="{ disabled: item.ipt === item.num }"
                     @click="addTakeWineNum(item)"
@@ -83,6 +90,7 @@
 </template>
 
 <script>
+import Header from "@/components/header";
 import {
   saveWine,
   takeWine,
@@ -114,6 +122,9 @@ export default {
       tabIndex: 0,
       list: [1, 2, 3]
     };
+  },
+  components: {
+    Header
   },
   mounted() {
     if (this.$route.query && this.$route.query.tabIndex) {
@@ -149,7 +160,8 @@ export default {
     },
     // 我要取酒
     getTakeWineList() {
-      this.list = [];
+      this.list = [1, 2, 3, 4, 5];
+      return;
       takeWine({
         // data: {uid: },
         loading: true
@@ -183,7 +195,8 @@ export default {
         .catch(err => {});
     },
     getOverdueWineList() {
-      this.list = [];
+      this.list = [1, 2, 3];
+      return;
       overdueWine({
         loading: true
       })
@@ -201,9 +214,9 @@ export default {
   position: fixed;
   left: 0;
   right: 0;
-  top: 0;
+  top: 40px;
   padding: 0 0.3rem;
-  height: 0.9rem;
+  height: 40px;
   background-color: #070707;
   .tab-item {
     padding-top: 0.36rem;
@@ -217,7 +230,7 @@ export default {
   }
 }
 .note {
-  margin-top: 4.6rem;
+  margin-top: 5rem;
   font-size: 0.26rem;
   color: #fff;
   text-align: center;
@@ -251,7 +264,7 @@ export default {
   }
 }
 .wine-list {
-  padding-top: 1.15rem;
+  padding-top: 90px;
   padding-bottom: 1rem;
   .item-box {
     margin-bottom: 0.14rem;

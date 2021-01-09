@@ -1,11 +1,12 @@
 <template>
   <!--消费记录-->
   <div>
+    <Header />
     <div
       class="consume-list"
       v-infinite-scroll="getdata"
       infinite-scroll-disabled="loading"
-      infinite-scroll-distance="10"
+      infinite-scroll-distance="5"
       v-if="list.length > 0"
     >
       <div class="consume-item-box" v-for="(item, index) in list" :key="index">
@@ -39,24 +40,12 @@
 </template>
 
 <script>
+import Header from "@/components/header";
 export default {
   name: "ConsumeHistory",
   data() {
     return {
-      list: [
-        { sell_price: 123, addtime: 123456 },
-        { sell_price: 123, addtime: 123456 },
-        { sell_price: 123, addtime: 123456 },
-        { sell_price: 123, addtime: 123456 },
-        { sell_price: 123, addtime: 123456 },
-        { sell_price: 123, addtime: 123456 },
-        { sell_price: 123, addtime: 123456 },
-        { sell_price: 123, addtime: 123456 },
-        { sell_price: 123, addtime: 123456 },
-        { sell_price: 123, addtime: 123456 },
-        { sell_price: 123, addtime: 123456 },
-        { sell_price: 123, addtime: 123456 }
-      ],
+      list: [],
       pn: 1,
       loading: true,
       hasmore: true
@@ -65,19 +54,23 @@ export default {
   created() {
     this.getdata();
   },
+  components: {
+    Header
+  },
   methods: {
     getdata() {
-      console.log(this.pn, "12313123");
       let that = this;
       if (!this.hasmore) return;
+      this.loading = true;
       this.request({
         url: "/api/v1/product/order_list",
-        loading: true,
         data: {
           page: this.pn
         },
+        loading: true,
         successFn(res) {
-          if (res.data.length != 0) {
+          if (res.data.length > 0) {
+            that.loading = false;
             res.data.forEach(item => {
               item.show = false;
               item.detail = [];
@@ -117,7 +110,7 @@ export default {
 
 <style lang="scss" scoped>
 .consume-list {
-  margin: 0.28rem 0.2rem 0;
+  margin: 40px 0.2rem 0;
   .consume-item-box {
     margin-bottom: 0.2rem;
   }
