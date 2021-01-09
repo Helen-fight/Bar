@@ -49,6 +49,7 @@ export default {
     background-color: #121212;
     color: #fff;
     padding-left: 0;
+    box-shadow: none;
   }
   .room {
     color: #ff314f;
