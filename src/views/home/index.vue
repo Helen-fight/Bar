@@ -16,11 +16,11 @@
       <p class="look-store"><span>查看门店</span></p>
       <div class="flex-h">
         <div class="add-btn" @click="openLocation">Add</div>
-        <a class="add-btn" href="tel:15280568356">Telephone</a>
+        <a class="add-btn" href="tel:0592-5650099">Telephone</a>
       </div>
       <p class="address">
-        上海浦东新区东方路3539号2号楼3楼 <br />3rd floor,building 2, 3539
-        Dongfang Road, Pudong New Area, Shanghai
+        中国福建省厦门市思明区金桥路91号 <br />
+        91 jinqiao Road,Siming District,Xiamen City,Fujian Province,China
       </p>
     </div>
     <tabbar />
@@ -109,7 +109,6 @@ export default {
         scanType: ["qrCode", "barCode"], // 可以指定扫二维码还是一维码，默认二者都有
         success: function(res) {
           var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
-          console.log(result, "扫码结果");
           if (result.indexOf("table=") < 0) {
             that.$toast("扫码错误，请扫描正确的二维码");
             return;
@@ -123,10 +122,10 @@ export default {
     openLocation() {
       // 使用微信内置地图查看门店位置
       wx.openLocation({
-        latitude: 24.481622, // 纬度，浮点数，范围为90 ~ -90
-        longitude: 118.198303, // 经度，浮点数，范围为180 ~ -180。
-        name: "中航紫金广场B栋", // 位置名
-        address: "中航紫金广场B栋", // 地址详情说明
+        latitude: 24.48672, // 纬度，浮点数，范围为90 ~ -90
+        longitude: 118.10149, // 经度，浮点数，范围为180 ~ -180。
+        name: "LAFLAME CLUB", // 位置名
+        address: "福建省厦门市思明区金桥路91号", // 地址详情说明
         scale: 16, // 地图缩放级别,整形值,范围从1~28。默认为最大
         infoUrl: "" // 在查看位置界面底部显示的超链接,可点击跳转
       });

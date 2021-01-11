@@ -13,17 +13,14 @@ export function saveWine(options){
         options.errorFn = (res) => {
             reject(res);
         };
-
         r(options);
     })
     
 }
-
-// 我要取酒
-export function takeWine(options){
-    
+// 获取存酒列表
+export function saveWineList(options){
     return new Promise((resolve, reject) => {
-        options.url = '/api/v1/alcohol/record';
+        options.url = '/api/v1/product/index';
         options.successFn = (res) => {
             resolve(res);
         };
@@ -33,17 +30,46 @@ export function takeWine(options){
         options.errorFn = (res) => {
             reject(res);
         };
-
-        console.log(options);
-
+        r(options);
+    })
+}
+// 获取取酒列表
+export function takeWineList(options){
+    
+    return new Promise((resolve, reject) => {
+        options.url = '/api/v1/alcohol/lists';
+        options.successFn = (res) => {
+            resolve(res);
+        };
+        options.failFn = (res) => {
+            reject(res);
+        };
+        options.errorFn = (res) => {
+            reject(res);
+        };
         r(options);
     })
     
 }
-
+//  取酒
+export function takeWine(options){
+    return new Promise((resolve, reject) => {
+        options.url = '/api/v1/alcohol/get_alcohol';
+        options.successFn = (res) => {
+            resolve(res);
+        };
+        options.failFn = (res) => {
+            reject(res);
+        };
+        options.errorFn = (res) => {
+            reject(res);
+        };
+        r(options);
+    })
+}
 // 存酒记录
 export function historySaveWine(options){
-    options.url = '/api/v1/alcohol/over---';
+    options.url = '/api/v1/alcohol/record';
     return new Promise((resolve, reject) => {
         options.successFn = (res) => {
             resolve(res);
@@ -54,7 +80,6 @@ export function historySaveWine(options){
         options.errorFn = (res) => {
             reject(res);
         };
-
         r(options);
     })
     
@@ -62,7 +87,7 @@ export function historySaveWine(options){
 
 // 过期酒水
 export function overdueWine(options){
-    options.url = '/api/v1/alcohol/lists';
+    options.url = '/api/v1/alcohol/expire_list';
     return new Promise((resolve, reject) => {
         options.successFn = (res) => {
             resolve(res);
@@ -73,7 +98,6 @@ export function overdueWine(options){
         options.errorFn = (res) => {
             reject(res);
         };
-
         r(options);
     })
     

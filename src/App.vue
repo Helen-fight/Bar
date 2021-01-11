@@ -58,9 +58,9 @@ export default {
             signature: data.signature, // 必填，签名，见附录1
             jsApiList: ["scanQRCode", "openLocation", "chooseWXPay"] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
           });
-          wx.error(re => {
+          /* wx.error(re => {
             console.log(re, "jssdk配置失败");
-          });
+          }); */
         }
       });
     },
@@ -73,7 +73,6 @@ export default {
           code: code
         },
         successFn(res) {
-          console.log(res, "用户数据");
           window.localStorage.setItem(userInfoKey, JSON.stringify(res.data));
           if (res.data.mobile === "") {
             that.$router.push("/bind-phone");

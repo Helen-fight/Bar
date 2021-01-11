@@ -68,8 +68,13 @@ export default {
     total() {
       let arr = [0, 0];
       this.list.forEach(item => {
-        arr[0] = arr[0] + Number(item.sell_price) * item.buyNum;
-        arr[1] = arr[1] + Number(item.oriprice) * item.buyNum;
+        arr[0] = (
+          Number(arr[0]) +
+          Number(item.sell_price) * item.buyNum
+        ).toFixed(2);
+        arr[1] = (Number(arr[1]) + Number(item.oriprice) * item.buyNum).toFixed(
+          2
+        );
       });
       return arr;
     }

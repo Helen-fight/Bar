@@ -46,7 +46,7 @@ export default {
   z-index: 3;
   color: #fff;
   .back-btn {
-    background-color: #121212;
+    background-color: #070707;
     color: #fff;
     padding-left: 0;
     box-shadow: none;

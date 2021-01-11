@@ -110,8 +110,14 @@ export default {
       for (var i = 0, len = this.list.length; i < len; i++) {
         if (this.list[i].data.length > 0) {
           this.list[i].data.forEach(item => {
-            arr[0] = arr[0] + Number(item.sell_price) * item.buyNum;
-            arr[1] = arr[1] + Number(item.oriprice) * item.buyNum;
+            arr[0] = (
+              Number(arr[0]) +
+              Number(item.sell_price) * item.buyNum
+            ).toFixed(2);
+            arr[1] = (
+              Number(arr[1]) +
+              Number(item.oriprice) * item.buyNum
+            ).toFixed(2);
           });
         }
       }

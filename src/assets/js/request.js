@@ -67,7 +67,7 @@ function requestOk(res, options) {
       options.successFn(res.data);
     }
   } else {
-    console.log(res, "+++++++++获取数据失败！！");
+    //console.log(res, "+++++++++获取数据失败！！");
     if (options.failFn && typeof options.failFn == "function") {
       options.failFn(res);
       return false;
