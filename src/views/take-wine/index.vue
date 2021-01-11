@@ -12,8 +12,11 @@
         {{ item.name }}
       </div>
     </div>
-    <div class="take-box flex-h" v-if="tabIndex===0 || tabIndex===1">
-      <p class="take-text">当前台号：<span>{{table}}</span>，扫码换台</p>
+    <div class="take-box flex-h" v-if="tabIndex === 0 || tabIndex === 1">
+      <p class="take-text">
+        当前台号：<span>{{ table }}</span
+        >，扫码换台
+      </p>
       <div class="take-scan" @click="scanTap">扫一扫</div>
     </div>
     <!--start: 存酒-->
@@ -24,22 +27,19 @@
     <!--end: 存酒-->
     <!--start: 取酒-->
     <div v-if="tabIndex === 1 || tabIndex === 0">
-      <div class="wine-list" v-if="list.length>0">
+      <div class="wine-list" v-if="list.length > 0">
         <div class="item-box" v-for="(item, index) in list" :key="index">
           <div class="wine-item flex-h flex-hsb">
             <img class="wine-img" :src="item.img" alt="" />
             <div class="wine-content">
               <p class="wine-name">
-                {{item.name}}<span> ({{item.unit}})</span>
+                {{ item.name }}<span> ({{ item.unit }})</span>
               </p>
               <div class="flex-h flex-hsb flex-vc">
-                <span v-if="tabIndex===0">价格：{{item.sell_price}}</span>
-                <span v-if="tabIndex===1">存酒数量：{{item.num}}</span>
+                <span v-if="tabIndex === 0">价格：{{ item.sell_price }}</span>
+                <span v-if="tabIndex === 1">存酒数量：{{ item.num }}</span>
                 <div class="count-box flex-h">
-                  <span
-                    @click="cutTakeWineNum(item)"
-                    >-</span
-                  >
+                  <span @click="cutTakeWineNum(item)">-</span>
                   <input
                     class="wine-num"
                     v-model="item.ipt"
@@ -47,27 +47,40 @@
                     type="number"
                     pattern="[0-9]*"
                   />
-                  <span
-                    @click="addTakeWineNum(item)"
-                    >+</span
-                  >
+                  <span @click="addTakeWineNum(item)">+</span>
                 </div>
               </div>
-              <p class="price-box" v-if="tabIndex===1">过期时间：{{item.expire_time}}</p>
+              <p class="price-box" v-if="tabIndex === 1">
+                过期时间：{{ item.expire_time }}
+              </p>
             </div>
           </div>
           <div class="take-btn-box">
-            <span class="take-btn" v-if="tabIndex===0" @click="saveWineFn(item)">存酒</span>
-            <span class="take-btn" v-else-if="tabIndex===1" @click="takeWineFn(item)">取酒</span>
+            <span
+              class="take-btn"
+              v-if="tabIndex === 0"
+              @click="saveWineFn(item)"
+              >存酒</span
+            >
+            <span
+              class="take-btn"
+              v-else-if="tabIndex === 1"
+              @click="takeWineFn(item)"
+              >取酒</span
+            >
           </div>
         </div>
       </div>
-      <p v-else class="no-wine"><span v-if="tabIndex===0">暂无酒水</span><span v-if="tabIndex===1">暂无存储酒水</span></p>
+      <p v-else class="no-wine">
+        <span v-if="tabIndex === 0">暂无酒水</span
+        ><span v-if="tabIndex === 1">暂无存储酒水</span>
+      </p>
     </div>
     <!--end: 取酒-->
     <!--start: 存取记录-->
     <div v-else>
-      <div class="wine-list" 
+      <div
+        class="wine-list"
         style="padding-bottm: 0"
         v-infinite-scroll="getdata"
         infinite-scroll-immediate-check="false"
@@ -88,15 +101,26 @@
               </p>
               <span class="save-text">
                 <template v-if="item.status === '0'">待确认</template>
-                <template v-if="item.status === '1'">已存</template>
-                <template v-if="item.status === '2'">已取</template>
-                <template v-if="item.status === '3'">已拒绝</template>
-                <template v-if="tabIndex===3">已过期</template>
+                <template v-if="item.status === '1' && item.type === '1'"
+                  >已存</template
+                >
+                <template v-if="item.status === '1' && item.type === '2'"
+                  >已取</template
+                >
+                <template v-if="item.status === '2'">已拒绝</template>
+                <template v-if="tabIndex === 3">已过期</template>
               </span>
             </div>
-            <p><span v-if="item.status === '2'">取酒</span><span v-else>存酒</span>数量：{{item.num}}</p>
-            <p class="mar" v-if="tabIndex === 2">下单时间：{{item.addtime}}</p>
-            <p class="mar" v-if="tabIndex === 3">过期时间：{{item.expire_time}}</p>
+            <p>
+              <span v-if="item.type === '2'">取酒</span
+              ><span v-if="item.type === '1'">存酒</span>数量：{{ item.num }}
+            </p>
+            <p class="mar" v-if="tabIndex === 2">
+              下单时间：{{ item.addtime }}
+            </p>
+            <p class="mar" v-if="tabIndex === 3">
+              过期时间：{{ item.expire_time }}
+            </p>
           </div>
         </div>
       </div>
@@ -153,7 +177,7 @@ export default {
   },
   mounted() {
     let table = window.localStorage.getItem("table");
-    if(table){
+    if (table) {
       this.table = table;
     }
     if (this.$route.query && this.$route.query.tabIndex) {
@@ -171,8 +195,7 @@ export default {
   },
   methods: {
     tabFn(index) {
-      if(this.tabIndex === index)
-        return ;
+      if (this.tabIndex === index) return;
       this.tabIndex = index;
       this.list = [];
       if (index === 0) this.getSaveWineList();
@@ -196,38 +219,39 @@ export default {
             that.$toast("扫码错误，请扫描正确的二维码");
             return;
           }
-          that.$toast("扫码成功")
+          that.$toast("扫码成功");
           let tableNum = result.split("table=")[1];
           window.localStorage.setItem("table", tableNum);
         }
       });
     },
     // 获取存酒列表
-    getSaveWineList(){
+    getSaveWineList() {
       saveWineList({
         loading: true
-      }).then(res => {
-        if(res.data.length>0){
-          let arr = [];
-          res.data.forEach(item => {
-            if(item.data.length>0)
-              arr.push(...item.data)
-          })
-          arr.forEach(item=>{
-            item.ipt = 0;
-          })
-          this.list = arr;
-        }
-      }).catch(err => {})
+      })
+        .then(res => {
+          if (res.data.length > 0) {
+            let arr = [];
+            res.data.forEach(item => {
+              if (item.data.length > 0) arr.push(...item.data);
+            });
+            arr.forEach(item => {
+              item.ipt = 0;
+            });
+            this.list = arr;
+          }
+        })
+        .catch(err => {});
     },
     // 存酒
-    saveWineFn(item){
-      if(this.table === "未知"){
+    saveWineFn(item) {
+      if (this.table === "未知") {
         this.$toast("请先扫码获取台号");
-        return ;
-      }else if(item.ipt === 0){
+        return;
+      } else if (item.ipt === 0) {
         this.$toast("请先点酒");
-        return ;
+        return;
       }
       this.$messagebox
         .confirm("确定存酒吗", "存酒提示")
@@ -240,12 +264,15 @@ export default {
                 num: item.ipt,
                 table_num: this.table
               }
-            }).then(res=>{
-              this.$toast(res.msg)
-              item.ipt = 0;
-            }).catch(err=>{})
+            })
+              .then(res => {
+                this.$toast(res.msg);
+                item.ipt = 0;
+              })
+              .catch(err => {});
           }
-        }).catch(e=>{})
+        })
+        .catch(e => {});
     },
     // 获取取酒列表
     getTakeWineList() {
@@ -254,21 +281,21 @@ export default {
       })
         .then(res => {
           let list = res.data || [];
-          list.forEach(item=>{
+          list.forEach(item => {
             item.ipt = Number(item.num);
-          })
+          });
           this.list = list;
         })
         .catch(err => {});
     },
     // 取酒
-    takeWineFn(item){
-      if(this.table === "未知"){
+    takeWineFn(item) {
+      if (this.table === "未知") {
         this.$toast("请先扫码获取台号");
-        return ;
-      }else if(item.ipt === 0){
+        return;
+      } else if (item.ipt === 0) {
         this.$toast("请选择取多少酒");
-        return ;
+        return;
       }
       this.$messagebox
         .confirm("确定取酒吗", "取酒提示")
@@ -281,26 +308,33 @@ export default {
                 num: item.ipt,
                 table_num: this.table
               }
-            }).then(res=>{
-              this.$toast(res.msg);
-              this.getTakeWineList();
-            }).catch(err=>{})
+            })
+              .then(res => {
+                this.$toast(res.msg);
+                this.getTakeWineList();
+              })
+              .catch(err => {});
           }
-        }).catch(e=>{})
+        })
+        .catch(e => {});
     },
     cutTakeWineNum(item) {
       if (item.ipt === 0) return;
       item.ipt--;
     },
     addTakeWineNum(item) {
-      if (item.ipt === Number(item.num)) return;
+      if (this.tabIndex === 0 && item.ipt === Number(item.num)) {
+        this.$toast("库存告急，小二已快马加班备货中");
+        return;
+      }
+      if (this.tabIndex === 1 && item.ipt === Number(item.num)) return;
       item.ipt++;
     },
-    getdata(){
-      if(this.tabIndex === 2){
+    getdata() {
+      if (this.tabIndex === 2) {
         this.getHistorySaveWineList();
-      }else if(this.tabIndex === 3){
-        this.getOverdueWineList()
+      } else if (this.tabIndex === 3) {
+        this.getOverdueWineList();
       }
     },
     // 存取记录
@@ -309,7 +343,7 @@ export default {
       this.loading = true;
       historySaveWine({
         loading: true,
-        data:{
+        data: {
           page: this.pn
         }
       })
@@ -332,7 +366,7 @@ export default {
       this.loading = true;
       overdueWine({
         loading: true,
-        data:{
+        data: {
           page: this.pn
         }
       })
@@ -390,7 +424,7 @@ export default {
   background-color: #ff314f;
   border-radius: 24px;
 }
-.no-wine{
+.no-wine {
   margin-top: 5.6rem;
   color: #fff;
   text-align: center;
@@ -407,7 +441,7 @@ export default {
   background-color: #070707;
   .take-text {
     width: 72%;
-    span{
+    span {
       color: #ff314f;
     }
   }
@@ -437,14 +471,16 @@ export default {
     }
     .wine-content {
       width: 5.1rem;
-      .mar{margin-top: .16rem;}
+      .mar {
+        margin-top: 0.16rem;
+      }
     }
     .save-text {
       font-size: 0.24rem;
       color: #a7a7a7;
     }
     .wine-name {
-      height: .32rem;
+      height: 0.32rem;
       line-height: 0.32rem;
       margin-top: 3px;
       margin-bottom: 0.12rem;
