@@ -20,6 +20,7 @@
               <input
                 class="wine-num"
                 v-model="item.buyNum"
+                disabled
                 type="number"
                 pattern="[0-9]*"
               />
@@ -92,6 +93,10 @@ export default {
     },
     addNum(item, type) {
       if (type === "add") {
+        if (item.buyNum > Number(item.num)) {
+          this.$toast("库存告急，小二已快马加班备货中");
+          return;
+        }
         item.buyNum++;
       } else if (type === "reduce") {
         if (item.buyNum > 0) item.buyNum--;

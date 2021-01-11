@@ -323,10 +323,6 @@ export default {
       item.ipt--;
     },
     addTakeWineNum(item) {
-      if (this.tabIndex === 0 && item.ipt === Number(item.num)) {
-        this.$toast("库存告急，小二已快马加班备货中");
-        return;
-      }
       if (this.tabIndex === 1 && item.ipt === Number(item.num)) return;
       item.ipt++;
     },

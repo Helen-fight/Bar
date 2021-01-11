@@ -49,6 +49,7 @@
                 <input
                   v-model="subitem.buyNum"
                   class="wine-num"
+                  disabled
                   type="number"
                   pattern="[0-9]*"
                 />
@@ -172,6 +173,10 @@ export default {
     addNum(item, type) {
       if (Number(item.num) === 0) return; // 卖完了
       if (type === "add") {
+        if (item.buyNum > Number(item.num)) {
+          this.$toast("库存告急，小二已快马加班备货中");
+          return;
+        }
         item.buyNum++;
       } else if (type === "reduce") {
         item.buyNum--;
