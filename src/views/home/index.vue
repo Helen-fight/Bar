@@ -38,41 +38,42 @@ export default {
       menu: [
         {
           id: 0,
-          name: "我要订台",
-          icon: "",
-          path: ""
-        },
-        {
-          id: 1,
           name: "点单结账",
           icon: "home-icon2",
           path: "/wine"
         },
         {
-          id: 2,
+          id: 1,
           name: "存/取酒",
           icon: "home-icon3",
           path: "/take-wine"
         },
         {
-          id: 3,
+          id: 2,
           name: "呼叫服务",
           icon: "home-icon4",
-          path: ""
+          path: "/call"
+        },
+        {
+          id: 3,
+          name: "我的订单",
+          icon: "home-icon6",
+          path: "/consume-history"
         },
         {
           id: 4,
-          name: "积分商城",
-          icon: "home-icon5",
+          name: "我要订台",
+          icon: "",
           path: ""
         },
         {
           id: 5,
-          name: "我的订单",
-          icon: "home-icon6",
-          path: "/consume-history"
+          name: "积分商城",
+          icon: "home-icon5",
+          path: ""
         }
-      ]
+      ],
+      tableNum: ""
     };
   },
   components: {
@@ -86,20 +87,51 @@ export default {
         that.$router.push("/bind-phone");
       }
     }
+    if (window.localStorage.getItem("table"))
+      this.tableNum = window.localStorage.getItem("table");
   },
   methods: {
     goto(path) {
       if (path === "/wine") {
         // 点酒的时候先判断本地是否有缓存房间号，没有的话跳到扫一扫界面
-        let tableNum = window.localStorage.getItem("table");
-        if (!tableNum) {
+        if (!this.tableNum) {
           this.$router.push("/scan");
           return;
         }
+      } else if (path === "/call") {
+        // 呼叫服务
+        this.callFn();
+        return;
       }
 
       if (path) this.$router.push(path);
       else this.$messagebox.alert("功能开发中，敬请期待", "提示");
+    },
+    callFn() {
+      if (!this.tableNum) {
+        this.$toast("请先扫码，再呼叫服务");
+        return;
+      }
+      let that = this;
+      this.$messagebox
+        .confirm(
+          "当前台号：" + this.tableNum + "(可扫码换台)，确定呼叫服务吗",
+          "呼叫提示"
+        )
+        .then(action => {
+          if (action === "confirm") {
+            this.request({
+              url: "/api/v1/sys/hujiao",
+              data: {
+                code: this.tableNum
+              },
+              successFn(res) {
+                that.$toast(res.msg);
+              }
+            });
+          }
+        })
+        .catch(e => {});
     },
     scanFn() {
       // 扫一扫，成功后调用后端接口获取房间号
