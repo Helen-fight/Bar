@@ -21,6 +21,7 @@ export default {
   watch: {
     $route(to, from) {
       if (this.firstRender) {
+        // 缓存桌号，在线点酒要用
         this.firstRender = false;
         let query = this.$route.query;
         if (query && query.table) {
